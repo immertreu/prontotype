@@ -949,7 +949,88 @@ title: Overview
 <h1 id="tag-ref">Tag Reference</h1>
 
 <article>
-	<p>Documentation coming soon.</p>
+	
+	<h2>Page information</h2>
+	
+	<p>There are a number of ways to get a <strong>page data object</strong> for any particular page. A page data object will have the following properties available:</p> 
+	
+	<table>
+		<tr>
+			<th>Key</th>
+			<th>Description</th>
+		</tr>
+		<tr>
+			<td class="key">id</td>
+			<td class="desc">The <a href="#page-ids">page ID</a>, if one has been added</td>
+		</tr>
+		<tr>
+			<td class="key">name</td>
+			<td class="desc">The filename (without file extension) of the page template</td>
+		</tr>
+		<tr>
+			<td class="key">nice_name</td>
+			<td class="desc">The filename of the page template, underscores and dashes turned into spaces, first letters of each word capitalised</td>
+		</tr>
+		<tr>
+			<td class="key">url</td>
+			<td class="desc">The page URL</td>
+		</tr>
+		<tr>
+			<td class="key">nice_url</td>
+			<td class="desc">The page URL, with <code>/index</code> segments removed where present</td>
+		</tr>
+		<tr>
+			<td class="key">short_url</td>
+			<td class="desc">The short URL for the page, if it exists</td>
+		</tr>
+		<tr>
+			<td class="key">level</td>
+			<td class="desc">How many levels down the page sits in the heirarchy</td>
+		</tr>
+	</table>
+	
+	<h3>Page tags</h3>
+	
+	<table>
+		<tr>
+			<th>Tag</th>
+			<th>Description</th>
+			<th>Example</th>
+		</tr>
+		<tr>
+			<td class="key">pages.current</td>
+			<td class="desc">Returns a <strong>page object</strong> representing the current page</td>
+			<td class="example">{{ pages.current.nice_name }}</td>
+		</tr>
+		<tr>
+			<td class="key">pages.getById(<em>id</em>)</td>
+			<td class="desc">Retrieve a <strong>page object</strong> from an ID</td>
+			<td class="example">{{ pages.getById('mypage').url }}</td>
+		</tr>
+		<tr>
+			<td class="key">pages.getByPath(<em>path</em>)</td>
+			<td class="desc">Retrieve a <strong>page object</strong> from a URL path</td>
+			<td class="example">{{ pages.getById('/about/mypage/').name }}</td>
+		</tr>
+		<tr>
+			<td class="key">pages.link(<em>id</em>)</td>
+			<td class="desc">Generate a URL for a page from it's ID</td>
+			<td class="example">{{ pages.link('mypage') }}</td>
+		</tr>
+	</table>
+	
+	<h2>URL information</h2>
+	
+	<p>Docs coming soon</p>
+	
+	<h2>Cookie information</h2>
+	
+	<p>Docs coming soon</p>
+	
+	<h2>Misc utilities</h2>
+	
+	<p>Docs coming soon</p>
+	
 </article>
 
 
