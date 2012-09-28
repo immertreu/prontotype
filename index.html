@@ -11,7 +11,7 @@ title: Overview
 		
 		<a href="https://github.com/allmarkedup/prontotype/zipball/master" class="button download">Download Prontotype &darr;</a>
 		
-		<p class="version">Latest version: v1.0-beta</p>
+		<p class="version">Latest version: v1.0-beta2</p>
 		
 		<p>Or check out the <a href="https://github.com/allmarkedup/prontotype">Github repo</a> &rarr;</p>
 	
@@ -23,7 +23,7 @@ title: Overview
 		<li>Separate your layouts from your content using powerful template inheritance</li>
 		<li>Mock-up everything from simple login behaviours to complex role-based authentication scenarios</li>
 		<!--<li>Add contextual notes to pages and content blocks that you can easily show/hide</li> -->
-		<li>Use YAML or CSV files to define data structures that will be accessible throughout your prototype</li>
+		<li>Use YAML, JSON or CSV files to define data structures that will be accessible throughout your prototype</li>
 		<li>Write CSS using LESS and have it automatically compiled for use in your protoype</li>
 		<li>Give your pages IDs so you can move them around easily without breaking links</li>
 		<li>Use whatever frontend prototyping framework you like (<a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> is included, but anything can be used)</li>
@@ -304,7 +304,7 @@ title: Overview
 	
 	<h2>Working with Data</h2>
 	
-	<p>Prontotype provides a simple way to define structured data that can be used in your prototype. Data files are kept in the <code>/data</code> directory and can be defined in YAML or CSV format.</p>
+	<p>Prontotype provides a simple way to define structured data that can be used in your prototype. Data files are kept in the <code>/data</code> directory and can be defined in YAML, JSON or CSV format.</p>
 	
 	<p>The data in these files can be accessed from within your prototype's pages and layouts using the <code>{{ data }}</code> template tag. This uses the Twig 'dot notation' to access the data structure defined in your files and prints out the appropriate value. The general format of this is as follows:</p>
 	
@@ -346,6 +346,49 @@ title: Overview
     <strong>text:</strong> An example 
   <strong>- url:</strong> http://test.com
     <strong>text:</strong> A test link
+</code></pre>
+
+<h4>Usage: <code>/structure/pages/example.html</code></h4>
+<pre><code data-language="html">{% set bob = <strong>data.example.people.bob</strong> %}
+&lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
+&lt;p&gt;These are the links:&lt;/p&gt;
+&lt;ul&gt;
+  {% for link in <strong>data.example.links</strong> %}
+    &lt;li&gt;&lt;a href=&quot;<strong>{{ link.url }}</strong>&quot;&gt;<strong>{{ link.text }}</strong>&lt;/a&gt;&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;
+</code></pre>
+
+	<h3>JSON data</h3>
+	
+	<p><a href="http://www.json.org/">JSON</a> (JavaScript Object Notation) is a text-based open standard designed for human-readable data interchange.</p>
+		
+	<h4>Example JSON file: <code>/data/example.json</code></h4>
+	
+<pre><code data-language="shell">{
+	<strong>"people"</strong> : {
+		<strong>"bob"</strong> : {
+			<strong>"first_name"</strong> : <strong>"Bob"</strong>,
+			<strong>"last_name"</strong> : <strong>"Builder"</strong>,
+			<strong>"email"</strong> : <strong>"bob@thebuilder.com"</strong>
+		},
+		<strong>"pat"</strong> : {
+			<strong>"first_name"</strong> : <strong>"Pat"</strong>,
+			<strong>"last_name"</strong> : <strong>"Postman"</strong>,
+			<strong>"email"</strong> : <strong>"pat@thepostman.com"</strong>
+		}
+	},
+	<strong>"links"</strong> : [
+		{
+			<strong>"url"</strong> : <strong>"http://example.com"</strong>,
+			<strong>"text"</strong> : <strong>"An example"</strong>
+		},
+		{
+			<strong>"url"</strong> : <strong>"http://test.com"</strong>,
+			<strong>"text"</strong> : <strong>"A test link"</strong>
+		}
+	]
+}
 </code></pre>
 
 <h4>Usage: <code>/structure/pages/example.html</code></h4>
