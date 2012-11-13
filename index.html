@@ -23,7 +23,7 @@ title: Overview
 		<li>Separate your layouts from your content using powerful template inheritance</li>
 		<li>Mock-up everything from simple login behaviours to complex role-based authentication scenarios</li>
 		<!--<li>Add contextual notes to pages and content blocks that you can easily show/hide</li> -->
-		<li>Use YAML, JSON or CSV files to define data structures that will be accessible throughout your prototype</li>
+		<li>Use YAML, JSON, CSV or XML files to define data structures that will be accessible throughout your prototype</li>
 		<li>Write CSS using LESS and have it automatically compiled for use in your protoype</li>
 		<li>Give your pages IDs so you can move them around easily without breaking links</li>
 		<li>Use whatever frontend prototyping framework you like (<a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> is included, but anything can be used)</li>
@@ -304,7 +304,7 @@ title: Overview
 	
 	<h2>Working with Data</h2>
 	
-	<p>Prontotype provides a simple way to define structured data that can be used in your prototype. Data files are kept in the <code>/data</code> directory and can be defined in YAML, JSON or CSV format.</p>
+	<p>Prontotype provides a simple way to define structured data that can be used in your prototype. Data files are kept in the <code>/data</code> directory and can be defined in YAML, JSON, CSV or XML format.</p>
 	
 	<p>The data in these files can be accessed from within your prototype's pages and layouts using the <code>{{ data }}</code> template tag. This uses the Twig 'dot notation' to access the data structure defined in your files and prints out the appropriate value. The general format of this is as follows:</p>
 	
@@ -402,11 +402,56 @@ title: Overview
 &lt;/ul&gt;
 </code></pre>
 
+	<h3>XML data</h3>
+
+	<p><a href="http://www.xml.org/">XML</a> (eXtend Markup Language) is a text-based open standard.</p>
+
+	<h4>Example XML file: <code>/data/example.xml</code></h4>
+
+<pre><code data-language="xml">
+&lt;<strong>data</strong>&gt;
+    &lt;<strong>people</strong>&gt;
+        &lt;<strong>bob</strong>&gt;
+            &lt;<strong>first_name</strong>&gt;<strong>Bob</strong>&lt;<strong>/first_name</strong>&gt;
+            &lt;<strong>last_name</strong>&gt;<strong>Builder</strong>&lt;<strong>/last_name</strong>&gt;
+            &lt;<strong>email</strong>&gt;<strong>bob@thebuilder.com</strong>&lt;<strong>/email</strong>&gt;
+        &lt;/<strong>bob</strong>&gt;
+        &lt;<strong>pat</strong>&gt;
+            &lt;<strong>first_name</strong>&gt;<strong>Pat</strong>&lt;<strong>/first_name</strong>&gt;
+            &lt;<strong>last_name</strong>&gt;<strong>Postman</strong>&lt;<strong>/last_name</strong>&gt;
+            &lt;<strong>email</strong>&gt;<strong>pat@thepostman.com</strong>&lt;<strong>/email</strong>&gt;
+        &lt;/<strong>pat</strong>&gt;
+    &lt;/<strong>people</strong>&gt;
+    &lt;<strong>links</strong>&gt;
+        &lt;<strong>link</strong>&gt;
+            &lt;<strong>url</strong>&gt;<strong>http://example.com</strong>&lt;<strong>/url</strong>&gt;
+            &lt;<strong>text</strong>&gt;<strong>An example</strong>&lt;<strong>/text</strong>&gt;
+        &lt;/<strong>link</strong>&gt;
+        &lt;<strong>link</strong>&gt;
+            &lt;<strong>url</strong>&gt;<strong>http://test.com</strong>&lt;<strong>/url</strong>&gt;
+            &lt;<strong>text</strong>&gt;<strong>A test link</strong>&lt;<strong>/text</strong>&gt;
+        &lt;/<strong>link</strong>&gt;
+    &lt;/<strong>links</strong>&gt;
+&lt;/<strong>data</strong>&gt;
+</code></pre>
+
+<h4>Usage: <code>/structure/pages/example.html</code></h4>
+<pre><code data-language="html">{% set bob = <strong>data.example.people.bob</strong> %}
+&lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
+&lt;p&gt;These are the links:&lt;/p&gt;
+&lt;ul&gt;
+  {% for link in <strong>data.example.links</strong> %}
+    &lt;li&gt;&lt;a href=&quot;<strong>{{ link.url }}</strong>&quot;&gt;<strong>{{ link.text }}</strong>&lt;/a&gt;&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;
+</code></pre>
+<p>Notice that the XML root element is not addressable, only its content is picked up.</p>
+
 	<h3>CSV data</h3>
 	
 	<p>Prontotype will parse CSV files in your <code>/data</code> directory and make them available to your templates. By default Prontotype expects your CSV data to be formatted with a <strong>header row of column names</strong>, one of which should be <strong>'id'</strong>. This 'id' column should be used to define IDs for each row. These IDs can then be used to reference individual rows.</p>
 	
-	<p>Of course CSVs can only represent a very straightforward array-style datatype - if need more complex data structures then you will need to use YAML files to represent your data.</p>
+	<p>Of course CSVs can only represent a very straightforward array-style datatype - if need more complex data structures then you will need to use YAML, JSON or XML files to represent your data.</p>
 	
 	<p class="note">If your data is specified without column headers or IDs you can <a href="#configuration">configure Prontotype</a> to give you access to the CSV data using numeric keys instead. You can also specify custom delimiter, enclosure and escape characters if required to match your CSV file's setup.</p>
 	
