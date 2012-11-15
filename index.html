@@ -957,6 +957,21 @@ title: Overview
 	
 </article>
 
+<article id="debug">
+	<h2>Debugging your Prototype</h2>
+
+	<h3>Dumping a variable</h3>
+	<p>When editing your prototype, it might be useful to be able to inspect some variable.</p>
+
+    <p>To do so, first enable debug mode in the <a href="#configuration">configuration file</a>:</p>
+
+    <pre><code class="snippet" data-language="shell"><strong>debug:</strong>true</code></pre>
+
+    <p>Then, <a href="http://twig.sensiolabs.org/doc/functions/dump.html">dump</a> the variable you want to inspect (for example, the <code>data</code> variable):</p>
+
+    <pre><code class="snippet" data-language="shell"><strong>{{ dump(data) }}</strong></code></pre>
+</article>
+
 <h1 id="configuration">Configuration</h1>
 
 <article>
