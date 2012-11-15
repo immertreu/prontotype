@@ -504,7 +504,6 @@ title: Overview
 </article>
 
 <article id="assets">
-	
 	<h2>Asset Helpers</h2>
 
 	<p>Prontotype includes a few helper <a href="#macros">macros</a> (i.e. functions) to make working with static assets - CSS/JS/images - a little bit easier. It also comes bundled with <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> (if that is your thing) to help kick-start your frontend code.</p>
@@ -548,6 +547,57 @@ title: Overview
 &lt;!-- Outputs: &lt;link rel=&quot;stylesheet&quot; href=&quot;/path/to/generated/file.css&quot; type=&quot;text/css&quot; media=&quot;screen&quot;&gt; --&gt;
 </code></pre>
 	
+</article>
+
+<article id="placeholder">
+
+	<h2>Placeholder images</h2>
+
+	<p>Prontotype includes a few helper <a href="#macros">macros</a> (i.e. functions) to insert placeholder images easily.</p>
+
+	<p>To use any of the placeholder images macros in your pages or layout templates, you first need to include the following line at the top of your page, layout template or include file:</p>
+
+	<pre><code data-language="html"><strong>{% import 'PT/macros/images.html' as images %}</strong></code></pre>
+
+	<p>And then you can use any of the images macros in your templates using the <code>{{ images }}</code> variable, as detailed below:</p>
+
+	<h3>Dummyimage</h3>
+    <p>To generate placeholder images with the <a href="http://dummyimage.com/">Dynamic Dummy Image Generator</a>:</p>
+<pre><code data-language="html">
+<strong>{{ images.dummyimage({ width:300, height:150, bgcolor:"000000", fgcolor: "E66F05", format: "png", text: "hello world"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://dummyimage.com/300x150/000000/E66F05.png&amp;text=hello world&quot; /&gt; --&gt;
+</code></pre>
+    <p>Outputs the following placeholder image:</p>
+    <p><img src="http://dummyimage.com/300x150/000000/E66F05.png&amp;text=hello world"/></p>
+
+	<h3>Placeholdit</h3>
+    <p>To generate placeholder images with <a href="http://placehold.it/">Placehold.it</a>:</p>
+<pre><code data-language="html">
+<strong>{{ images.placeholdit({ width:300, height:150, bgcolor:"000000", fgcolor: "E66F05", format: "png", text: "hello world"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://placehold.it/300x150/000000/E66F05.png&amp;text=hello world&quot; /&gt; --&gt;
+</code></pre>
+    <p>Outputs the following placeholder image:</p>
+    <p><img src="http://placehold.it/300x150/000000/E66F05.png&amp;text=hello world"/></p>
+
+	<h3>Lorempixel</h3>
+    <p>To generate placeholder images with <a href="http://lorempixel.com/">lorempixel</a>:</p>
+<pre><code data-language="html">
+<strong>{{ images.lorempixel({ width:300, height:150, cat: "people", text: "hello world"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://lorempixel.com/300/150/people/hello world&quot; /&gt; --&gt;
+</code></pre>
+    <p>Outputs the following placeholder image:</p>
+    <p><img src="http://lorempixel.com/300/150/people/hello world"/></p>
+
+	<h3>Flickholdr</h3>
+    <p>To generate random placeholder images with <a href="http://flickholdr.com/">flickholdr</a>:</p>
+<pre><code data-language="html">
+<strong>{{ images.flickholdr({ width:300, height:150, tags: "people,face"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://flickholdr.com/300/150/people,face/7&quot; /&gt; --&gt;
+</code></pre>
+    <p>Outputs the following placeholder image:</p>
+    <p> <img src="http://flickholdr.com/300/150/people,face/7"/></p>
+
+	<h3>Extras</h3>
+    <p>You can add any class or other attribute to placeholder images. Example:</p>
+<pre><code data-language="html">
+<strong>{{ images.flickholdr({ width:300, height:150, tags: "people,face"}, {class:"illu", id:"face"}) }}</strong>  &lt;!-- Outputs: &lt;img class=&quot;illu&quot; id=&quot;face&quot; href=&quot;http://flickholdr.com/300/150/people,face/7&quot; /&gt; --&gt;
+</code></pre>
 </article>
 
 <article id="navigation">
