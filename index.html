@@ -23,7 +23,7 @@ title: Overview
 		<li>Separate your layouts from your content using powerful template inheritance</li>
 		<li>Mock-up everything from simple login behaviours to complex role-based authentication scenarios</li>
 		<!--<li>Add contextual notes to pages and content blocks that you can easily show/hide</li> -->
-		<li>Use YAML, JSON or CSV files to define data structures that will be accessible throughout your prototype</li>
+		<li>Use YAML, JSON, CSV or XML files to define data structures that will be accessible throughout your prototype</li>
 		<li>Write CSS using LESS and have it automatically compiled for use in your protoype</li>
 		<li>Give your pages IDs so you can move them around easily without breaking links</li>
 		<li>Use whatever frontend prototyping framework you like (<a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> is included, but anything can be used)</li>
@@ -304,7 +304,7 @@ title: Overview
 	
 	<h2>Working with Data</h2>
 	
-	<p>Prontotype provides a simple way to define structured data that can be used in your prototype. Data files are kept in the <code>/data</code> directory and can be defined in YAML, JSON or CSV format.</p>
+	<p>Prontotype provides a simple way to define structured data that can be used in your prototype. Data files are kept in the <code>/data</code> directory and can be defined in YAML, JSON, CSV or XML format.</p>
 	
 	<p>The data in these files can be accessed from within your prototype's pages and layouts using the <code>{{ data }}</code> template tag. This uses the Twig 'dot notation' to access the data structure defined in your files and prints out the appropriate value. The general format of this is as follows:</p>
 	
@@ -402,11 +402,56 @@ title: Overview
 &lt;/ul&gt;
 </code></pre>
 
+	<h3>XML data</h3>
+
+	<p><a href="http://www.xml.org/">XML</a> (eXtend Markup Language) is a text-based open standard.</p>
+
+	<h4>Example XML file: <code>/data/example.xml</code></h4>
+
+<pre><code data-language="xml">
+&lt;<strong>data</strong>&gt;
+    &lt;<strong>people</strong>&gt;
+        &lt;<strong>bob</strong>&gt;
+            &lt;<strong>first_name</strong>&gt;<strong>Bob</strong>&lt;<strong>/first_name</strong>&gt;
+            &lt;<strong>last_name</strong>&gt;<strong>Builder</strong>&lt;<strong>/last_name</strong>&gt;
+            &lt;<strong>email</strong>&gt;<strong>bob@thebuilder.com</strong>&lt;<strong>/email</strong>&gt;
+        &lt;/<strong>bob</strong>&gt;
+        &lt;<strong>pat</strong>&gt;
+            &lt;<strong>first_name</strong>&gt;<strong>Pat</strong>&lt;<strong>/first_name</strong>&gt;
+            &lt;<strong>last_name</strong>&gt;<strong>Postman</strong>&lt;<strong>/last_name</strong>&gt;
+            &lt;<strong>email</strong>&gt;<strong>pat@thepostman.com</strong>&lt;<strong>/email</strong>&gt;
+        &lt;/<strong>pat</strong>&gt;
+    &lt;/<strong>people</strong>&gt;
+    &lt;<strong>links</strong>&gt;
+        &lt;<strong>link</strong>&gt;
+            &lt;<strong>url</strong>&gt;<strong>http://example.com</strong>&lt;<strong>/url</strong>&gt;
+            &lt;<strong>text</strong>&gt;<strong>An example</strong>&lt;<strong>/text</strong>&gt;
+        &lt;/<strong>link</strong>&gt;
+        &lt;<strong>link</strong>&gt;
+            &lt;<strong>url</strong>&gt;<strong>http://test.com</strong>&lt;<strong>/url</strong>&gt;
+            &lt;<strong>text</strong>&gt;<strong>A test link</strong>&lt;<strong>/text</strong>&gt;
+        &lt;/<strong>link</strong>&gt;
+    &lt;/<strong>links</strong>&gt;
+&lt;/<strong>data</strong>&gt;
+</code></pre>
+
+<h4>Usage: <code>/structure/pages/example.html</code></h4>
+<pre><code data-language="html">{% set bob = <strong>data.example.people.bob</strong> %}
+&lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
+&lt;p&gt;These are the links:&lt;/p&gt;
+&lt;ul&gt;
+  {% for link in <strong>data.example.links</strong> %}
+    &lt;li&gt;&lt;a href=&quot;<strong>{{ link.url }}</strong>&quot;&gt;<strong>{{ link.text }}</strong>&lt;/a&gt;&lt;/li&gt;
+  {% endfor %}
+&lt;/ul&gt;
+</code></pre>
+<p>Notice that the XML root element is not addressable, only its content is picked up.</p>
+
 	<h3>CSV data</h3>
 	
 	<p>Prontotype will parse CSV files in your <code>/data</code> directory and make them available to your templates. By default Prontotype expects your CSV data to be formatted with a <strong>header row of column names</strong>, one of which should be <strong>'id'</strong>. This 'id' column should be used to define IDs for each row. These IDs can then be used to reference individual rows.</p>
 	
-	<p>Of course CSVs can only represent a very straightforward array-style datatype - if need more complex data structures then you will need to use YAML files to represent your data.</p>
+	<p>Of course CSVs can only represent a very straightforward array-style datatype - if need more complex data structures then you will need to use YAML, JSON or XML files to represent your data.</p>
 	
 	<p class="note">If your data is specified without column headers or IDs you can <a href="#configuration">configure Prontotype</a> to give you access to the CSV data using numeric keys instead. You can also specify custom delimiter, enclosure and escape characters if required to match your CSV file's setup.</p>
 	
@@ -459,7 +504,6 @@ title: Overview
 </article>
 
 <article id="assets">
-	
 	<h2>Asset Helpers</h2>
 
 	<p>Prontotype includes a few helper <a href="#macros">macros</a> (i.e. functions) to make working with static assets - CSS/JS/images - a little bit easier. It also comes bundled with <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> (if that is your thing) to help kick-start your frontend code.</p>
@@ -503,6 +547,57 @@ title: Overview
 &lt;!-- Outputs: &lt;link rel=&quot;stylesheet&quot; href=&quot;/path/to/generated/file.css&quot; type=&quot;text/css&quot; media=&quot;screen&quot;&gt; --&gt;
 </code></pre>
 	
+</article>
+
+<article id="placeholder">
+
+	<h2>Placeholder images</h2>
+
+	<p>Prontotype includes a few helper <a href="#macros">macros</a> (i.e. functions) to insert placeholder images easily.</p>
+
+	<p>To use any of the placeholder images macros in your pages or layout templates, you first need to include the following line at the top of your page, layout template or include file:</p>
+
+	<pre><code data-language="html"><strong>{% import 'PT/macros/images.html' as images %}</strong></code></pre>
+
+	<p>And then you can use any of the images macros in your templates using the <code>{{ images }}</code> variable, as detailed below:</p>
+
+	<h3>Dummyimage</h3>
+    <p>To generate placeholder images with the <a href="http://dummyimage.com/">Dynamic Dummy Image Generator</a>:</p>
+<pre><code data-language="html">
+<strong>{{ images.dummyimage({ width:300, height:150, bgcolor:"000000", fgcolor: "E66F05", format: "png", text: "hello world"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://dummyimage.com/300x150/000000/E66F05.png&amp;text=hello world&quot; /&gt; --&gt;
+</code></pre>
+    <p>Outputs the following placeholder image:</p>
+    <p><img src="http://dummyimage.com/300x150/000000/E66F05.png&amp;text=hello world"/></p>
+
+	<h3>Placeholdit</h3>
+    <p>To generate placeholder images with <a href="http://placehold.it/">Placehold.it</a>:</p>
+<pre><code data-language="html">
+<strong>{{ images.placeholdit({ width:300, height:150, bgcolor:"000000", fgcolor: "E66F05", format: "png", text: "hello world"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://placehold.it/300x150/000000/E66F05.png&amp;text=hello world&quot; /&gt; --&gt;
+</code></pre>
+    <p>Outputs the following placeholder image:</p>
+    <p><img src="http://placehold.it/300x150/000000/E66F05.png&amp;text=hello world"/></p>
+
+	<h3>Lorempixel</h3>
+    <p>To generate placeholder images with <a href="http://lorempixel.com/">lorempixel</a>:</p>
+<pre><code data-language="html">
+<strong>{{ images.lorempixel({ width:300, height:150, cat: "people", text: "hello world"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://lorempixel.com/300/150/people/hello world&quot; /&gt; --&gt;
+</code></pre>
+    <p>Outputs the following placeholder image:</p>
+    <p><img src="http://lorempixel.com/300/150/people/hello world"/></p>
+
+	<h3>Flickholdr</h3>
+    <p>To generate random placeholder images with <a href="http://flickholdr.com/">flickholdr</a>:</p>
+<pre><code data-language="html">
+<strong>{{ images.flickholdr({ width:300, height:150, tags: "people,face"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://flickholdr.com/300/150/people,face/7&quot; /&gt; --&gt;
+</code></pre>
+    <p>Outputs the following placeholder image:</p>
+    <p> <img src="http://flickholdr.com/300/150/people,face/7"/></p>
+
+	<h3>Extras</h3>
+    <p>You can add any class or other attribute to placeholder images. Example:</p>
+<pre><code data-language="html">
+<strong>{{ images.flickholdr({ width:300, height:150, tags: "people,face"}, {class:"illu", id:"face"}) }}</strong>  &lt;!-- Outputs: &lt;img class=&quot;illu&quot; id=&quot;face&quot; href=&quot;http://flickholdr.com/300/150/people,face/7&quot; /&gt; --&gt;
+</code></pre>
 </article>
 
 <article id="navigation">
@@ -860,6 +955,21 @@ title: Overview
 	
 	<p>When people then try to access the prototype they will be redirected to a login page, where they will need to enter these details in order to gain access to the site.</p>
 	
+</article>
+
+<article id="debug">
+	<h2>Debugging your Prototype</h2>
+
+	<h3>Dumping a variable</h3>
+	<p>When editing your prototype, it might be useful to be able to inspect some variable.</p>
+
+    <p>To do so, first enable debug mode in the <a href="#configuration">configuration file</a>:</p>
+
+    <pre><code class="snippet" data-language="shell"><strong>debug:</strong>true</code></pre>
+
+    <p>Then, <a href="http://twig.sensiolabs.org/doc/functions/dump.html">dump</a> the variable you want to inspect (for example, the <code>data</code> variable):</p>
+
+    <pre><code class="snippet" data-language="shell"><strong>{{ dump(data) }}</strong></code></pre>
 </article>
 
 <h1 id="configuration">Configuration</h1>
