@@ -503,6 +503,22 @@ title: Overview
 	
 </article>
 
+<article id="scrap">
+	<h2>Scraping Content</h2>
+
+    <p>Often, one may want to reuse (marked up) content from existing web pages. Prontotype allows to scrap (<b>get</b>) another page, <b>filter</b> part of its content, and/or <b>inject</b> some content into it.</p>
+
+	<h4>Usage example: scraping, filtering and injecting the wikipedia homepage</h4>
+    <p>The following code prepares some HTML content to inject. It then scraps the wikipedia homepage, retains its "In the news" section, and inject in every list element of this section the predefined injection markup:</p>
+<pre><code data-language="html">
+{% set injection %}
+<p style="color:red">This text is injected</p>
+{% endset %}
+{{ scrap.get('http://en.wikipedia.org/wiki/Main_Page#mp-itn').filter('#mp-itn').insert('li', injection) }}
+</code></pre>
+
+</article>
+
 <article id="assets">
 	<h2>Asset Helpers</h2>
 
