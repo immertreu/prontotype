@@ -192,11 +192,11 @@ title: Overview
 
   &lt;div class=&quot;content&quot;&gt;
 
-  <strong>{% block content %}</strong>
+  <strong>{{ "{% block content " }}%}</strong>
     
   &lt;p&gt;Default content&lt;/p&gt;
         
-  <strong>{% endblock content %}</strong>
+  <strong>{{ "{% endblock content " }}%}</strong>
 
   &lt;/div&gt;
 
@@ -215,12 +215,12 @@ title: Overview
     
 <pre><code data-language="html"><strong>{{ "{% extends &quot;layouts/example-layout.twig&quot;" }}%}</strong>
 
-<strong>{% block content %}</strong>
+<strong>{{ "{% block content" }}%}</strong>
 
 &lt;h1&gt;Content goes here&lt;/h1&gt;
 &lt;p&gt;This is some example content&lt;/p&gt;
 
-<strong>{% endblock content %}</strong>
+<strong>{{ "{% endblock content" }}%}</strong>
 </code></pre>
     
     
@@ -235,7 +235,7 @@ title: Overview
         
     <p>Includes are HTML files that contain reusable snippets of code or content, and that can be pulled in and included anywhere on your site. They are parsed as Twig templates so can use any of the available template tags within them.</p>
     
-    <p>By convention, includes are stored in a folder called 'includes' within the <code>/structure</code> directory, and can be pulled into your pages or templates using the <code>{% include %}</code> tag. For example, to include a header file that exists at <code>/structure/includes/header.twig</code> you could do this:</p>
+    <p>By convention, includes are stored in a folder called 'includes' within the <code>/structure</code> directory, and can be pulled into your pages or templates using the <code>{{ "{% include" }}%}</code> tag. For example, to include a header file that exists at <code>/structure/includes/header.twig</code> you could do this:</p>
     
 <pre><code data-language="html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
@@ -245,7 +245,7 @@ title: Overview
 &lt;/head&gt;
 &lt;body&gt;
 
-  <strong>{% include "includes/header.twig" %}</strong>
+  <strong>{{ "{% include 'includes/header.twig'" }}%}</strong>
 
   &lt;div class=&quot;content&quot;&gt;
     &lt;p&gt;Some content&lt;/p&gt;
@@ -273,7 +273,7 @@ title: Overview
     
     <p>An example macro for generating a hCard might look like this:</p>
     
-<pre><code data-language="html"><strong>{% macro vcard(name, url, tels) %}</strong>
+<pre><code data-language="html"><strong>{{ "{% macro vcard(name, url, tels)" }}%}</strong>
 &lt;div class=&quot;vcard&quot;&gt;
   &lt;a class=&quot;url fn&quot; href=&quot;<strong>{{ url }}</strong>&quot;&gt;<strong>{{ name }}</strong>&lt;/a&gt;
   <strong>{% for t in tels %}</strong>
@@ -282,7 +282,7 @@ title: Overview
   &lt;/span&gt;
   <strong>{% endfor %}</strong>
 &lt;/div&gt;
-<strong>{% endmacro %}</strong>
+<strong>{{ "{% endmacro" }}%}</strong>
 </code></pre>
     
     <p>Arguments to macros are always optional, and macros can reference other macros in the same file using the special <code>_self</code> variable. You can read more about defining macros in the <a href="http://twig.sensiolabs.org/doc/tags/macro.twig">Twig documentation</a> which goes into a lot more detail.</p>
@@ -291,7 +291,7 @@ title: Overview
         
     <p>Before macros can be used in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.twig">import them</a>. You just need to add the following line to the top of your page, layout template or include file:</p>
     
-    <pre><code><strong>{% import 'path/to/macro/file.twig' as yourMacros %}</strong></code></pre>
+    <pre><code><strong>{{ "{% import" }}%} as yourMacros %}</strong></code></pre>
 
     <p>Where <code>yourMacros</code> can be a variable name of your choosing, and the defined path is relative to your <code>/structure</code> directory. You'll then be able to run any macros defined in the imported file by referencing them by name like so (assuming a macro name of <code>doSomething</code>):</p>
     
@@ -354,7 +354,7 @@ title: Overview
 </code></pre>
 
 <h4>Usage: <code>/structure/pages/example.twig</code></h4>
-<pre><code data-language="html">{% set bob = <strong>data.example.people.bob</strong> %}
+<pre><code data-language="html">{{ "{% set" }}%} bob = <strong>data.example.people.bob</strong> %}
 &lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
 &lt;p&gt;These are the links:&lt;/p&gt;
 &lt;ul&gt;
@@ -397,7 +397,7 @@ title: Overview
 </code></pre>
 
 <h4>Usage: <code>/structure/pages/example.twig</code></h4>
-<pre><code data-language="html">{% set bob = <strong>data.example.people.bob</strong> %}
+<pre><code data-language="html">{{ "{% set" }}%} bob = <strong>data.example.people.bob</strong> %}
 &lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
 &lt;p&gt;These are the links:&lt;/p&gt;
 &lt;ul&gt;
@@ -441,7 +441,7 @@ title: Overview
 </code></pre>
 
 <h4>Usage: <code>/structure/pages/example.twig</code></h4>
-<pre><code data-language="html">{% set bob = <strong>data.example.people.bob</strong> %}
+<pre><code data-language="html">{{ "{% set" }}%} bob = <strong>data.example.people.bob</strong> %}
 &lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
 &lt;p&gt;These are the links:&lt;/p&gt;
 &lt;ul&gt;
@@ -468,7 +468,7 @@ title: Overview
 </code></pre>
 
 <h4>Usage: <code>/structure/pages/example2.twig</code></h4>
-<pre><code data-language="html">{% set bob = <strong>data.example2.bob</strong> %}
+<pre><code data-language="html">{{ "{% set" }}%} bob = <strong>data.example2.bob</strong> %}
 &lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
 &lt;p&gt;These are the links:&lt;/p&gt;
 &lt;ul&gt;
@@ -517,16 +517,16 @@ title: Overview
     
     <h4>Less example:</h4>
     
-<pre><code data-language="html">{% stylesheets 'path/to/input.less' filter='less' output='path/to/output.css' %}
+<pre><code data-language="html">{{ "{% stylesheets" }}%} 'path/to/input.less' filter='less' output='path/to/output.css' %}
     &lt;link href=&quot;{{ asset_url }}&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
-{% endstylesheets %}
+{{ "{% endstylesheets" }}%} %}
 </code></pre>
 
     <h4>Sass (SCSS) example:</h4>
     
-<pre><code data-language="html">{% stylesheets 'path/to/input.scss' filter='scss' output='path/to/output.css' %}
+<pre><code data-language="html">{{ "{% stylesheets" }}%} 'path/to/input.scss' filter='scss' output='path/to/output.css' %}
     &lt;link href=&quot;{{ asset_url }}&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
-{% endstylesheets %}
+{{ "{% endstylesheets" }}%} %}
 </code></pre>
 
 <p><strong>Note that you will need to make sure the directory that you want to output the CSS file to is writeable or this will fail!</strong></p>
@@ -541,14 +541,14 @@ title: Overview
 
     <p>To use any of the placeholder images macros in your pages or layout templates, you first need to include the following line at the top of your page, layout template or include file:</p>
 
-    <pre><code data-language="html"><strong>{% import 'PT/macros/images.twig' as images %}</strong></code></pre>
+    <pre><code data-language="html"><strong>{{ "{% import" }}%} 'PT/macros/images.twig' as images %}</strong></code></pre>
 
     <p>And then you can use any of the images macros in your templates using the <code>{{ images }}</code> variable, as detailed below:</p>
 
     <h3>Dummyimage</h3>
     <p>To generate placeholder images with the <a href="http://dummyimage.com/">Dynamic Dummy Image Generator</a>:</p>
 <pre><code data-language="html">
-<strong>{{ images.dummyimage({ width:300, height:150, bgcolor:"000000", fgcolor: "E66F05", format: "png", text: "hello world"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://dummyimage.com/300x150/000000/E66F05.png&amp;text=hello world&quot; /&gt; --&gt;
+<strong>{{ "{{" }} images.dummyimage({ width:300, height:150, bgcolor:"000000", fgcolor: "E66F05", format: "png", text: "hello world"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://dummyimage.com/300x150/000000/E66F05.png&amp;text=hello world&quot; /&gt; --&gt;
 </code></pre>
     <p>Outputs the following placeholder image:</p>
     <p><img src="http://dummyimage.com/300x150/000000/E66F05.png&amp;text=hello world"/></p>
@@ -556,7 +556,7 @@ title: Overview
     <h3>Placeholdit</h3>
     <p>To generate placeholder images with <a href="http://placehold.it/">Placehold.it</a>:</p>
 <pre><code data-language="html">
-<strong>{{ images.placeholdit({ width:300, height:150, bgcolor:"000000", fgcolor: "E66F05", format: "png", text: "hello world"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://placehold.it/300x150/000000/E66F05.png&amp;text=hello world&quot; /&gt; --&gt;
+<strong>{{ "{{" }} images.placeholdit({ width:300, height:150, bgcolor:"000000", fgcolor: "E66F05", format: "png", text: "hello world"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://placehold.it/300x150/000000/E66F05.png&amp;text=hello world&quot; /&gt; --&gt;
 </code></pre>
     <p>Outputs the following placeholder image:</p>
     <p><img src="http://placehold.it/300x150/000000/E66F05.png&amp;text=hello world"/></p>
@@ -564,7 +564,7 @@ title: Overview
     <h3>Lorempixel</h3>
     <p>To generate placeholder images with <a href="http://lorempixel.com/">lorempixel</a>:</p>
 <pre><code data-language="html">
-<strong>{{ images.lorempixel({ width:300, height:150, cat: "people", text: "hello world"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://lorempixel.com/300/150/people/hello world&quot; /&gt; --&gt;
+<strong>{{ "{{" }} images.lorempixel({ width:300, height:150, cat: "people", text: "hello world"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://lorempixel.com/300/150/people/hello world&quot; /&gt; --&gt;
 </code></pre>
     <p>Outputs the following placeholder image:</p>
     <p><img src="http://lorempixel.com/300/150/people/hello world"/></p>
@@ -572,7 +572,7 @@ title: Overview
     <h3>Flickholdr</h3>
     <p>To generate random placeholder images with <a href="http://flickholdr.com/">flickholdr</a>:</p>
 <pre><code data-language="html">
-<strong>{{ images.flickholdr({ width:300, height:150, tags: "people,face"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://flickholdr.com/300/150/people,face/7&quot; /&gt; --&gt;
+<strong>{{ "{{" }} images.flickholdr({ width:300, height:150, tags: "people,face"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://flickholdr.com/300/150/people,face/7&quot; /&gt; --&gt;
 </code></pre>
     <p>Outputs the following placeholder image:</p>
     <p> <img src="http://flickholdr.com/300/150/people,face/7"/></p>
@@ -580,7 +580,7 @@ title: Overview
     <h3>Extras</h3>
     <p>You can add any class or other attribute to placeholder images. Example:</p>
 <pre><code data-language="html">
-<strong>{{ images.flickholdr({ width:300, height:150, tags: "people,face"}, {class:"illu", id:"face"}) }}</strong>  &lt;!-- Outputs: &lt;img class=&quot;illu&quot; id=&quot;face&quot; href=&quot;http://flickholdr.com/300/150/people,face/7&quot; /&gt; --&gt;
+<strong>{{ "{{" }} images.flickholdr({ width:300, height:150, tags: "people,face"}, {class:"illu", id:"face"}) }}</strong>  &lt;!-- Outputs: &lt;img class=&quot;illu&quot; id=&quot;face&quot; href=&quot;http://flickholdr.com/300/150/people,face/7&quot; /&gt; --&gt;
 </code></pre>
 </article>
 
@@ -592,7 +592,7 @@ title: Overview
     
     <p>To use any of the navigation generator macros in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.twig">import them</a>. You can do that by including the following line at the top of your page, layout template or include file:</p>
     
-    <pre><code data-language="html"><strong>{% import 'PT/macros/navigation.twig' as nav %}</strong></code></pre>
+    <pre><code data-language="html"><strong>{{ "{% import" }}%} 'PT/macros/navigation.twig' as nav %}</strong></code></pre>
     
     <p>For all generated navigation, the page 'name' displayed <strong>will be derived from the filename</strong>. This is done by converting underscores and dashes in the filename to spaces, and capitalising the individual words. The only exception to this is the homepage and the 'index' page in each section. The names used for these are defined globally in the <a href="#configuration">configuration</a> file, and can be overridden if required.</p>
     
@@ -647,7 +647,7 @@ title: Overview
     
     <h4>Example of use:</h4>
     
-<pre><code data-language="html"><strong>{{ nav.page_tree({ start_from: 'about', depth: 2, id: 'my-nav', hide_index: true }) }}</strong>
+<pre><code data-language="html"><strong>{{ "{{" }} nav.page_tree({ start_from: 'about', depth: 2, id: 'my-nav', hide_index: true }) }}</strong>
 &lt;!-- outputs: --&gt;
 &lt;ul id=&quot;my-nav&quot;&gt;
   &lt;li&gt;&lt;a href=&quot;/about&quot;&gt;Overview&lt;/a&gt;&lt;/li&gt;
@@ -879,7 +879,7 @@ title: Overview
 
 <strong>{% if data.blog.posts[url.segment.2] %}</strong>
 
-  <strong>{% set post = data.blog.posts[url.segment.2] %}</strong>
+  <strong>{{ "{%" }} post = data.blog.posts[url.segment.2] %}</strong>
   &lt;div class=&quot;content&quot;&gt;
     &lt;h1&gt;<strong>{{ post.title }}</strong>&lt;/h1&gt;
     &lt;div class=&quot;body&quot;&gt;
