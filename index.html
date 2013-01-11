@@ -146,7 +146,7 @@ title: Overview
     
     <p>Once your page has an ID, you can always <strong>print its URL into your template</strong> by using:</p>
     
-    <pre><code><strong>{{ pages.link('PAGE-ID') }}</strong></code></pre>
+    <pre><code><strong>{{ "{{" }} pages.link('PAGE-ID') }}</strong></code></pre>
     
     <p>Where <code>PAGE-ID</code> is the ID of the page you are interested in.</p>
     
@@ -192,11 +192,11 @@ title: Overview
 
   &lt;div class=&quot;content&quot;&gt;
 
-  <strong>{{ "{% block content " }}%}</strong>
+  <strong>{{ "{%" }} block content %}</strong>
     
   &lt;p&gt;Default content&lt;/p&gt;
         
-  <strong>{{ "{% endblock content " }}%}</strong>
+  <strong>{{ "{%" }} endblock content %}</strong>
 
   &lt;/div&gt;
 
@@ -213,14 +213,14 @@ title: Overview
     <h4><strong>Page file (prototype homepage):</strong> <code>/structure/pages/index.twig</code> </h4>
     
     
-<pre><code data-language="html"><strong>{{ "{% extends &quot;layouts/example-layout.twig&quot;" }}%}</strong>
+<pre><code data-language="html"><strong>{{ "{%" }} extends &quot;layouts/example-layout.twig&quot; %}</strong>
 
-<strong>{{ "{% block content" }}%}</strong>
+<strong>{{ "{%" }} block content%}</strong>
 
 &lt;h1&gt;Content goes here&lt;/h1&gt;
 &lt;p&gt;This is some example content&lt;/p&gt;
 
-<strong>{{ "{% endblock content" }}%}</strong>
+<strong>{{ "{%" }} endblock content %}</strong>
 </code></pre>
     
     
@@ -235,7 +235,7 @@ title: Overview
         
     <p>Includes are HTML files that contain reusable snippets of code or content, and that can be pulled in and included anywhere on your site. They are parsed as Twig templates so can use any of the available template tags within them.</p>
     
-    <p>By convention, includes are stored in a folder called 'includes' within the <code>/structure</code> directory, and can be pulled into your pages or templates using the <code>{{ "{% include" }}%}</code> tag. For example, to include a header file that exists at <code>/structure/includes/header.twig</code> you could do this:</p>
+    <p>By convention, includes are stored in a folder called 'includes' within the <code>/structure</code> directory, and can be pulled into your pages or templates using the <code>{{ "{%" }} include %}</code> tag. For example, to include a header file that exists at <code>/structure/includes/header.twig</code> you could do this:</p>
     
 <pre><code data-language="html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
@@ -245,7 +245,7 @@ title: Overview
 &lt;/head&gt;
 &lt;body&gt;
 
-  <strong>{{ "{% include 'includes/header.twig'" }}%}</strong>
+  <strong>{{ "{%" }} include "includes/header.twig" %}</strong>
 
   &lt;div class=&quot;content&quot;&gt;
     &lt;p&gt;Some content&lt;/p&gt;
@@ -273,16 +273,16 @@ title: Overview
     
     <p>An example macro for generating a hCard might look like this:</p>
     
-<pre><code data-language="html"><strong>{{ "{% macro vcard(name, url, tels)" }}%}</strong>
+<pre><code data-language="html"><strong>{{ "{%" }} macro vcard(name, url, tels) %}</strong>
 &lt;div class=&quot;vcard&quot;&gt;
   &lt;a class=&quot;url fn&quot; href=&quot;<strong>{{ url }}</strong>&quot;&gt;<strong>{{ name }}</strong>&lt;/a&gt;
-  <strong>{% for t in tels %}</strong>
+  <strong>{{ "{%" }} for t in tels %}</strong>
   &lt;span class=&quot;tel&quot;&gt;
     &lt;span class=&quot;type&quot;&gt;<strong>{{ t.type }}</strong>&lt;/span&gt;: &lt;span class=&quot;value&quot;&gt;<strong>{{ t.number }}</strong>&lt;/span&gt;
   &lt;/span&gt;
-  <strong>{% endfor %}</strong>
+  <strong>{{ "{%" }} endfor %}</strong>
 &lt;/div&gt;
-<strong>{{ "{% endmacro" }}%}</strong>
+<strong>{{ "{%" }} endmacro %}</strong>
 </code></pre>
     
     <p>Arguments to macros are always optional, and macros can reference other macros in the same file using the special <code>_self</code> variable. You can read more about defining macros in the <a href="http://twig.sensiolabs.org/doc/tags/macro.twig">Twig documentation</a> which goes into a lot more detail.</p>
@@ -291,11 +291,11 @@ title: Overview
         
     <p>Before macros can be used in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.twig">import them</a>. You just need to add the following line to the top of your page, layout template or include file:</p>
     
-    <pre><code><strong>{{ "{% import" }}%} as yourMacros %}</strong></code></pre>
+    <pre><code><strong>{{ "{%" }} import %} as yourMacros %}</strong></code></pre>
 
     <p>Where <code>yourMacros</code> can be a variable name of your choosing, and the defined path is relative to your <code>/structure</code> directory. You'll then be able to run any macros defined in the imported file by referencing them by name like so (assuming a macro name of <code>doSomething</code>):</p>
     
-    <pre><code><strong>{{ yourMacros.doSomething( 'with_this_argument' ) }}</strong></code></pre>
+    <pre><code><strong>{{ "{{" }} yourMacros.doSomething( 'with_this_argument' ) }}</strong></code></pre>
         
     <h3>Built-in Macros</h3>
     
@@ -313,17 +313,17 @@ title: Overview
     
     <p>The data in these files can be accessed from within your prototype's pages and layouts using the <code>{{ data }}</code> template tag. This uses the Twig 'dot notation' to access the data structure defined in your files and prints out the appropriate value. The general format of this is as follows:</p>
     
-    <pre><code>{{ data.<strong>FILENAME</strong>.<strong>DATA.PATH.IN.FILE</strong> }}</code></pre>
+    <pre><code>{{ "{{" }} data.<strong>FILENAME</strong>.<strong>DATA.PATH.IN.FILE</strong> }}</code></pre>
     
     <p>Where <code>FILENAME</code> is the name of the data file you want to access (without the filename) and <code>DATA.PATH.IN.FILE</code> is the dot-notation path of the data variable you wish to access within that file. So an example might be:</p>
     
-<pre><code data-language="html"><strong>{{ data.mydata.people.bob.email }}</strong>  # outputs 'bob@thebuilder.com'
+<pre><code data-language="html"><strong>{{ "{{" }} data.mydata.people.bob.email }}</strong>  # outputs 'bob@thebuilder.com'
 
 # or you can use it in control structures too:
 
-<strong>{% if data.mydata.people.bob.role == 'builder' %}</strong>
+<strong>{{ "{%" }} if data.mydata.people.bob.role == 'builder' %}</strong>
   &lt;p&gt;You are a builder!&lt;/p&gt;
-<strong>{% endif %}</strong>
+<strong>{{ "{%" }} endif %}</strong>
 </code></pre>
     
     <p class="note">Note: If you have two files with the same filenames but in different formats (i.e. mydata.yml and mydata.csv) then Pronotype will attempt to merge the contents of the two files.</p>
@@ -354,13 +354,13 @@ title: Overview
 </code></pre>
 
 <h4>Usage: <code>/structure/pages/example.twig</code></h4>
-<pre><code data-language="html">{{ "{% set" }}%} bob = <strong>data.example.people.bob</strong> %}
-&lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
+<pre><code data-language="html">{{ "{%" }} set %} bob = <strong>data.example.people.bob</strong> %}
+&lt;p&gt;Bob&#x27;s first name is: <strong>{{ "{{" }} bob.first_name }}</strong> and his email is <strong>{{ "{{" }} bob.email }}</strong>&lt;/p&gt;
 &lt;p&gt;These are the links:&lt;/p&gt;
 &lt;ul&gt;
-  {% for link in <strong>data.example.links</strong> %}
-    &lt;li&gt;&lt;a href=&quot;<strong>{{ link.url }}</strong>&quot;&gt;<strong>{{ link.text }}</strong>&lt;/a&gt;&lt;/li&gt;
-  {% endfor %}
+  {{ "{%" }} for link in <strong>data.example.links</strong> %}
+    &lt;li&gt;&lt;a href=&quot;<strong>{{ "{{" }} link.url }}</strong>&quot;&gt;<strong>{{ "{{" }} link.text }}</strong>&lt;/a&gt;&lt;/li&gt;
+  {{ "{%" }} endfor %}
 &lt;/ul&gt;
 </code></pre>
 
@@ -397,13 +397,13 @@ title: Overview
 </code></pre>
 
 <h4>Usage: <code>/structure/pages/example.twig</code></h4>
-<pre><code data-language="html">{{ "{% set" }}%} bob = <strong>data.example.people.bob</strong> %}
-&lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
+<pre><code data-language="html">{{ "{%" }} set %} bob = <strong>data.example.people.bob</strong> %}
+&lt;p&gt;Bob&#x27;s first name is: <strong>{{ "{{" }} bob.first_name }}</strong> and his email is <strong>{{ "{{" }} bob.email }}</strong>&lt;/p&gt;
 &lt;p&gt;These are the links:&lt;/p&gt;
 &lt;ul&gt;
-  {% for link in <strong>data.example.links</strong> %}
-    &lt;li&gt;&lt;a href=&quot;<strong>{{ link.url }}</strong>&quot;&gt;<strong>{{ link.text }}</strong>&lt;/a&gt;&lt;/li&gt;
-  {% endfor %}
+  {{ "{%" }} for link in <strong>data.example.links</strong> %}
+    &lt;li&gt;&lt;a href=&quot;<strong>{{ "{{" }} link.url }}</strong>&quot;&gt;<strong>{{ "{{" }} link.text }}</strong>&lt;/a&gt;&lt;/li&gt;
+  {{ "{%" }} endfor %}
 &lt;/ul&gt;
 </code></pre>
 
@@ -441,13 +441,13 @@ title: Overview
 </code></pre>
 
 <h4>Usage: <code>/structure/pages/example.twig</code></h4>
-<pre><code data-language="html">{{ "{% set" }}%} bob = <strong>data.example.people.bob</strong> %}
-&lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
+<pre><code data-language="html">{{ "{%" }} set %} bob = <strong>data.example.people.bob</strong> %}
+&lt;p&gt;Bob&#x27;s first name is: <strong>{{ "{{" }} bob.first_name }}</strong> and his email is <strong>{{ "{{" }} bob.email }}</strong>&lt;/p&gt;
 &lt;p&gt;These are the links:&lt;/p&gt;
 &lt;ul&gt;
-  {% for link in <strong>data.example.links</strong> %}
-    &lt;li&gt;&lt;a href=&quot;<strong>{{ link.url }}</strong>&quot;&gt;<strong>{{ link.text }}</strong>&lt;/a&gt;&lt;/li&gt;
-  {% endfor %}
+  {{ "{%" }} for link in <strong>data.example.links</strong> %}
+    &lt;li&gt;&lt;a href=&quot;<strong>{{ "{{" }} link.url }}</strong>&quot;&gt;<strong>{{ "{{" }} link.text }}</strong>&lt;/a&gt;&lt;/li&gt;
+  {{ "{%" }} endfor %}
 &lt;/ul&gt;
 </code></pre>
 <p>Notice that the XML root element is not addressable, only its content is picked up.</p>
@@ -468,13 +468,13 @@ title: Overview
 </code></pre>
 
 <h4>Usage: <code>/structure/pages/example2.twig</code></h4>
-<pre><code data-language="html">{{ "{% set" }}%} bob = <strong>data.example2.bob</strong> %}
-&lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
+<pre><code data-language="html">{{ "{%" }} set %} bob = <strong>data.example2.bob</strong> %}
+&lt;p&gt;Bob&#x27;s first name is: <strong>{{ "{{" }} bob.first_name }}</strong> and his email is <strong>{{ "{{" }} bob.email }}</strong>&lt;/p&gt;
 &lt;p&gt;These are the links:&lt;/p&gt;
 &lt;ul&gt;
-  {% for person in <strong>data.example2</strong> %}
-    &lt;li&gt;Name: <strong>{{ person.first_name }}</strong> <strong>{{ person.last_name }}</strong>&lt;/li&gt;
-  {% endfor %}
+  {{ "{%" }} for person in <strong>data.example2</strong> %}
+    &lt;li&gt;Name: <strong>{{ "{{" }} person.first_name }}</strong> <strong>{{ "{{" }} person.last_name }}</strong>&lt;/li&gt;
+  {{ "{%" }} endfor %}
 &lt;/ul&gt;
 </code></pre>
 
@@ -517,16 +517,16 @@ title: Overview
     
     <h4>Less example:</h4>
     
-<pre><code data-language="html">{{ "{% stylesheets" }}%} 'path/to/input.less' filter='less' output='path/to/output.css' %}
-    &lt;link href=&quot;{{ asset_url }}&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
-{{ "{% endstylesheets" }}%} %}
+<pre><code data-language="html">{{ "{%" }} stylesheets %} 'path/to/input.less' filter='less' output='path/to/output.css' %}
+    &lt;link href=&quot;{{ "{{" }} asset_url }}&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
+{{ "{%" }} endstylesheets %} %}
 </code></pre>
 
     <h4>Sass (SCSS) example:</h4>
     
-<pre><code data-language="html">{{ "{% stylesheets" }}%} 'path/to/input.scss' filter='scss' output='path/to/output.css' %}
-    &lt;link href=&quot;{{ asset_url }}&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
-{{ "{% endstylesheets" }}%} %}
+<pre><code data-language="html">{{ "{%" }} stylesheets %} 'path/to/input.scss' filter='scss' output='path/to/output.css' %}
+    &lt;link href=&quot;{{ "{{" }} asset_url }}&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
+{{ "{%" }} endstylesheets %} %}
 </code></pre>
 
 <p><strong>Note that you will need to make sure the directory that you want to output the CSS file to is writeable or this will fail!</strong></p>
@@ -541,9 +541,9 @@ title: Overview
 
     <p>To use any of the placeholder images macros in your pages or layout templates, you first need to include the following line at the top of your page, layout template or include file:</p>
 
-    <pre><code data-language="html"><strong>{{ "{% import" }}%} 'PT/macros/images.twig' as images %}</strong></code></pre>
+    <pre><code data-language="html"><strong>{{ "{%" }} import %} 'PT/macros/images.twig' as images %}</strong></code></pre>
 
-    <p>And then you can use any of the images macros in your templates using the <code>{{ images }}</code> variable, as detailed below:</p>
+    <p>And then you can use any of the images macros in your templates using the <code>{{ "{{" }} images }}</code> variable, as detailed below:</p>
 
     <h3>Dummyimage</h3>
     <p>To generate placeholder images with the <a href="http://dummyimage.com/">Dynamic Dummy Image Generator</a>:</p>
@@ -592,13 +592,13 @@ title: Overview
     
     <p>To use any of the navigation generator macros in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.twig">import them</a>. You can do that by including the following line at the top of your page, layout template or include file:</p>
     
-    <pre><code data-language="html"><strong>{{ "{% import" }}%} 'PT/macros/navigation.twig' as nav %}</strong></code></pre>
+    <pre><code data-language="html"><strong>{{ "{%" }} import %} 'PT/macros/navigation.twig' as nav %}</strong></code></pre>
     
     <p>For all generated navigation, the page 'name' displayed <strong>will be derived from the filename</strong>. This is done by converting underscores and dashes in the filename to spaces, and capitalising the individual words. The only exception to this is the homepage and the 'index' page in each section. The names used for these are defined globally in the <a href="#configuration">configuration</a> file, and can be overridden if required.</p>
     
     <h3>Generating a page list</h3>
     
-    <p>The <code>{{ nav.page_tree() }}</code> macro will generated a nested list of pages within your site, ideal for generating those snazzy dropdown menus that you love so much. It accepts a JSON-style hash of parameters to help you configure its behaviour, with the available configuration options as follows:</p>
+    <p>The <code>{{ "{{" }} nav.page_tree() }}</code> macro will generated a nested list of pages within your site, ideal for generating those snazzy dropdown menus that you love so much. It accepts a JSON-style hash of parameters to help you configure its behaviour, with the available configuration options as follows:</p>
     
     <table>
         <tr>
@@ -698,13 +698,13 @@ title: Overview
         
     <p>Your pages and templates will all have access to a special <code>user</code> variable. The value of this will be null (empty) if there is no 'logged in' user. So to only show content to 'logged in' users you can do the following:</p>
     
-<pre><code data-language="html"><strong>{% if user %}</strong>&lt;p&gt;Display some logged-in-only content here&lt;/p&gt;<strong>{% endif %}</strong></code></pre>
+<pre><code data-language="html"><strong>{{ "{%" }} if user %}</strong>&lt;p&gt;Display some logged-in-only content here&lt;/p&gt;<strong>{{ "{%" }} endif %}</strong></code></pre>
     
     <p>If you have defined one or more users (see above) and one is 'logged in' then it will be set to the definition of that user. So (using the example users file above) if the '<strong>admin</strong>' user has logged in, then you could do the following in your pages and templates:</p>
     
-<pre><code data-language="html"><strong>{{ user.name }}</strong> &lt;!-- prints out &#x27;Ellie Xample&#x27; --&gt;
-<strong>{{ user.username }}</strong> &lt;!-- prints out &#x27;admin-example&#x27; --&gt;
-<strong>{% if user.role == 'admin' %}</strong>&lt;p&gt;Display some admin-only content here&lt;/p&gt;<strong>{% endif %}</strong>
+<pre><code data-language="html"><strong>{{ "{{" }} user.name }}</strong> &lt;!-- prints out &#x27;Ellie Xample&#x27; --&gt;
+<strong>{{ "{{" }} user.username }}</strong> &lt;!-- prints out &#x27;admin-example&#x27; --&gt;
+<strong>{{ "{%" }} if user.role == 'admin' %}</strong>&lt;p&gt;Display some admin-only content here&lt;/p&gt;<strong>{{ "{%" }} endif %}</strong>
 </code></pre>
 
     <p>If you <em>haven't</em> defined any users (or you don't specify one when logging them in), you can <strong>still use the login system</strong> - your <code>user</code> template variable will return <code>true</code> instead of a user object when logged in. So you can still use an 'if' statement to determine whether to hide/show content on depending on whether the anonymous user is logged in or not.</p>
@@ -877,21 +877,21 @@ title: Overview
 &lt;/head&gt;
 &lt;body&gt;
 
-<strong>{% if data.blog.posts[url.segment.2] %}</strong>
+<strong>{{ "{%" }} if data.blog.posts[url.segment.2] %}</strong>
 
   <strong>{{ "{%" }} post = data.blog.posts[url.segment.2] %}</strong>
   &lt;div class=&quot;content&quot;&gt;
-    &lt;h1&gt;<strong>{{ post.title }}</strong>&lt;/h1&gt;
+    &lt;h1&gt;<strong>{{ "{{" }} post.title }}</strong>&lt;/h1&gt;
     &lt;div class=&quot;body&quot;&gt;
-      <strong>{{ post.body }}</strong>
+      <strong>{{ "{{" }} post.body }}</strong>
     &lt;/div&gt;
   &lt;/div&gt;
 
-<strong>{% else %}</strong>
+<strong>{{ "{%" }} else %}</strong>
 
   &lt;p&gt;No blog post found, sorry!&lt;/p&gt;
 
-<strong>{% endif %}</strong>
+<strong>{{ "{%" }} endif %}</strong>
 
 &lt;/body&gt;   
 &lt;/html&gt;
@@ -955,7 +955,7 @@ title: Overview
 
     <p>Then, <a href="http://twig.sensiolabs.org/doc/functions/dump.twig">dump</a> the variable you want to inspect (for example, the <code>data</code> variable):</p>
 
-    <pre><code class="snippet" data-language="shell"><strong>{{ dump(data) }}</strong></code></pre>
+    <pre><code class="snippet" data-language="shell"><strong>{{ "{{" }} dump(data) }}</strong></code></pre>
 </article>
 
 <h1 id="configuration">Configuration</h1>
@@ -1155,22 +1155,22 @@ title: Overview
         <tr>
             <td class="key">pages.current</td>
             <td class="desc">Returns a <strong>page object</strong> representing the current page</td>
-            <td class="example">{{ pages.current.nice_name }}</td>
+            <td class="example">{{ "{{" }} pages.current.nice_name }}</td>
         </tr>
         <tr>
             <td class="key">pages.getById(<em>id</em>)</td>
             <td class="desc">Retrieve a <strong>page object</strong> from an ID</td>
-            <td class="example">{{ pages.getById('mypage').url }}</td>
+            <td class="example">{{ "{{" }} pages.getById('mypage').url }}</td>
         </tr>
         <tr>
             <td class="key">pages.getByPath(<em>path</em>)</td>
             <td class="desc">Retrieve a <strong>page object</strong> from a URL path</td>
-            <td class="example">{{ pages.getById('/about/mypage/').name }}</td>
+            <td class="example">{{ "{{" }} pages.getById('/about/mypage/').name }}</td>
         </tr>
         <tr>
             <td class="key">pages.link(<em>id</em>)</td>
             <td class="desc">Generate a URL for a page from it's ID</td>
-            <td class="example">{{ pages.link('mypage') }}</td>
+            <td class="example">{{ "{{" }} pages.link('mypage') }}</td>
         </tr>
     </table>
     
