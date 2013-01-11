@@ -11,7 +11,7 @@ title: Overview
 		
 		<a href="https://github.com/allmarkedup/prontotype/zipball/master" class="button download">Download Prontotype &darr;</a>
 		
-		<p class="version">Latest version: v1.0-beta2</p>
+		<p class="version">Latest version: v2.0</p>
 		
 		<p>Or check out the <a href="https://github.com/allmarkedup/prontotype">Github repo</a> &rarr;</p>
 	
@@ -22,9 +22,8 @@ title: Overview
 		<li>Define reusable chunks of HTML to make prototype-wide updates quick and easy</li>
 		<li>Separate your layouts from your content using powerful template inheritance</li>
 		<li>Mock-up everything from simple login behaviours to complex role-based authentication scenarios</li>
-		<!--<li>Add contextual notes to pages and content blocks that you can easily show/hide</li> -->
 		<li>Use YAML, JSON, CSV or XML files to define data structures that will be accessible throughout your prototype</li>
-		<li>Write CSS using LESS and have it automatically compiled for use in your protoype</li>
+		<li>Write CSS using Less or Sass (SCSS) and have it automatically compiled for use in your protoype</li>
 		<li>Give your pages IDs so you can move them around easily without breaking links</li>
 		<li>Use whatever frontend prototyping framework you like (<a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> is included, but anything can be used)</li>
 		<li>Auto-generate navigation, forms and more using in-built macros</li>
@@ -45,6 +44,7 @@ title: Overview
 		<li>Linux-based web server</li>
 		<li>A web server like Apache (optionally with mod_rewrite or equivalent enabled) or Nginx</li>
 		<li>PHP version 5.3.1+</li>
+        <li><a href="http://getcomposer.org">Composer</a></li>
 	</ul>
 	
 	<h3 id="installation">Download and Installation</h3>
@@ -52,6 +52,8 @@ title: Overview
 	<ol>
 		<li><a href="https://github.com/allmarkedup/prontotype/zipball/master">Download</a> and unzip the latest version (or clone it from the <a href="https://github.com/allmarkedup/prontotype">Github repo</a>).</li>
 		<li>Move the files to the web root of your server</li>
+        <li><a href="http://getcomposer.org/doc/00-intro.md#installation-nix">Install Composer</a> (if you don't have it on your system already)</li>
+        <li>Install dependencies - <code>$ composer install</code></li>
 		<li>Optionally tweak some of the <a href="#configuration">default configuration settings</a> (but you probably don't need to!)</li>
 		<li>That's it :-)</li>
 	</ol>
@@ -70,16 +72,16 @@ title: Overview
 		<li>You should now have URLs without the ugly 'index.php' bit in them.</li>
 	</ol>
 	
-	<h3>Robots.txt</h3>
+	<h3 id="robots">Robots.txt</h3>
 	
 	<p>We've assumed that you are using Prontotype for prototyping, and so you probably don't want its pages to be indexed by search engines if it is placed in a web-accessible location. So the <code>robots.txt</code> file that is included in the distribution will block all search engines by default.</p>
 	
 	<p>If for some reason you <em>do</em> want your prototype to be indexed, then make sure you remove (or amend) this file!</p>
-		
+	
 </article>
 
 <article id="directory-structure">
-		
+	
 	<h2>The Prontotype directory structure</h2>
 	
 	<p>Before diving in and creating some pages, it's worthwhile getting aquainted with the directory structure Prototype uses.</p>
@@ -95,8 +97,10 @@ title: Overview
 		<li class="file"><strong>config.yml</strong> - A YAML configuration file.</li>
 		<li class="file"><strong>htaccess.txt</strong> - Sample .htaccess configuration file. See the <a href="#clean-urls">section on enabling 'clean' URLs</a>.</li>
 		<li class="file"><strong>index.php</strong> - The application bootstrap file.</li>
+        <li class="file"><strong>robots.txt</strong> - A default <a href="#robots">robots.txt</a> file to stop search engines indexing your prototype.</li>
+        <li class="file"><strong>composer.json</strong> - The <a href="http://getcomposer.org">Composer</a> setup file. This should not need to be touched.</li>
 	</ul>
-			
+    
 </article>
 
 <h1 id="structure">Structuring your Prototype</h1>
@@ -105,9 +109,9 @@ title: Overview
 		
 	<h2>Pages</h2>
 	
-	<p>Pages are just files with a <code>.html</code> extension that reside in the <code>/structure/pages</code> directory.</p>
+	<p>Pages are just files with a <code>.twig</code> extension that reside in the <code>/structure/pages</code> directory.</p>
 	
-	<p>All requests for pages are routed into this directory, which means that (at its simplest) when Prontotype sees a request for <code>http://example.com/index.php/account/test</code> it will look for a page that lives at <code>/structure/pages/account/test.html</code>. If it doesn't find a page there it'll look for a file at <code>/structure/pages/account/test/index.html</code>, and if it <em>still</em> doesn't find anything it'll display a 404 page.</p>
+	<p>All requests for pages are routed into this directory, which means that (at its simplest) when Prontotype sees a request for <code>http://example.com/index.php/account/test</code> it will look for a page that lives at <code>/structure/pages/account/test.twig</code>. If it doesn't find a page there it'll look for a file at <code>/structure/pages/account/test/index.twig</code>, and if it <em>still</em> doesn't find anything it'll display a 404 page.</p>
 	
 	<p>So you can basically structure your pages directory just like you would a simple HTML site.</p>
 	
@@ -119,9 +123,9 @@ title: Overview
 	
 	<p>For example:</p>
 	
-<pre><code>/site/pages/about/<strong>1-</strong>company.html  ==>	http://example.com/index.php/about/company
+<pre><code>/site/pages/about/<strong>1-</strong>company.twig  ==>	http://example.com/index.php/about/company
 		
-/site/pages/contact/<strong>3-</strong>sales.html  ==>	http://example.com/index.php/contact/sales
+/site/pages/contact/<strong>3-</strong>sales.twig  ==>	http://example.com/index.php/contact/sales
 </code></pre>
 	
 	<h3 id="page-ids">Page IDs <em>(optional)</em></h3>
@@ -134,9 +138,9 @@ title: Overview
 
 	<p>For example:</p>
 	
-<pre><code>/site/pages/about/<strong>[c123]-</strong>company.html	==>	http://example.com/index.php/about/company (id = <strong>c123</strong>)
+<pre><code>/site/pages/about/<strong>[c123]-</strong>company.twig	==>	http://example.com/index.php/about/company (id = <strong>c123</strong>)
 		
-/site/pages/contact/<strong>[spg]-</strong>sales.html	==>	http://example.com/index.php/contact/sales (id = <strong>spg</strong>)
+/site/pages/contact/<strong>[spg]-</strong>sales.twig	==>	http://example.com/index.php/contact/sales (id = <strong>spg</strong>)
 </code></pre>
 	
 	<p>Once your page has an ID, you can always <strong>print its URL into your template</strong> by using:</p>
@@ -149,9 +153,9 @@ title: Overview
 	
 	<p>You can of course mix ordering with pages ids - so combining the examples above we would have:<p>
 		
-<pre><code>/site/pages/about/<strong>1-[c123]-</strong>company.html	==>	http://example.com/index.php/about/company (id = <strong>c123</strong>)
+<pre><code>/site/pages/about/<strong>1-[c123]-</strong>company.twig	==>	http://example.com/index.php/about/company (id = <strong>c123</strong>)
 		
-/site/pages/contact/<strong>3-[spg]-</strong>sales.html	==>	http://example.com/index.php/contact/sales (id = <strong>spg</strong>)
+/site/pages/contact/<strong>3-[spg]-</strong>sales.twig	==>	http://example.com/index.php/contact/sales (id = <strong>spg</strong>)
 </code></pre>
 
 <p>This allows you to have page IDs for the pages that need them and still keep your pages ordered correctly within your site.</p>
@@ -163,7 +167,7 @@ title: Overview
 		
 	<h2>Layouts</h2>
 		
-	<p>Prontotype uses <a href="http://twig.sensiolabs.org/">Twig</a> for its templates, which allows it to support a powerful <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">template inheritance</a> model. This means that you can define <strong>shared layouts</strong> that have <strong>placeholders for 'blocks' of content</strong> in them. Your pages can then be set up to 'inherit' a layout, so they only need to specify the content to be placed into the placeholder area.</p>
+	<p>Prontotype uses <a href="http://twig.sensiolabs.org/">Twig</a> for its templates, which allows it to support a powerful <a href="http://twig.sensiolabs.org/doc/templates.twig#template-inheritance">template inheritance</a> model. This means that you can define <strong>shared layouts</strong> that have <strong>placeholders for 'blocks' of content</strong> in them. Your pages can then be set up to 'inherit' a layout, so they only need to specify the content to be placed into the placeholder area.</p>
 	
 	<p>By convention, layouts for your prototype should be stored in a folder called '<strong>layouts</strong>' within your <code>/structure</code> directory. You will have to create this folder if you opt to use layouts in your prototype.</p>
 	
@@ -171,7 +175,7 @@ title: Overview
 	
 	<h3>An example of using a layout:</h3>
 	
-	<h4><strong>Layout file:</strong> <code>/structure/layouts/example-layout.html</code></h4>
+	<h4><strong>Layout file:</strong> <code>/structure/layouts/example-layout.twig</code></h4>
 	
 <pre><code data-language="html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
@@ -205,10 +209,10 @@ title: Overview
 	
 	<p class="note">Note the area delinated with the block/endblock named tags - this is the placeholder section that your page content will be dropped into. Any text between these tags will be used as default content if you do not provide content for that area in your page file.</p>
 	
-	<h4><strong>Page file (prototype homepage):</strong> <code>/structure/pages/index.html</code> </h4>
+	<h4><strong>Page file (prototype homepage):</strong> <code>/structure/pages/index.twig</code> </h4>
 	
 	
-<pre><code data-language="html"><strong>{% extends &quot;layouts/example-layout.html&quot; %}</strong>
+<pre><code data-language="html"><strong>{% extends &quot;layouts/example-layout.twig&quot; %}</strong>
 
 <strong>{% block content %}</strong>
 
@@ -219,7 +223,7 @@ title: Overview
 </code></pre>
 	
 	
-	<p>You can read more about <a href="http://twig.sensiolabs.org/doc/templates.html#template-inheritance">template inheritance on the Twig website</a>. It's a really powerful concept that can really speed up updating your prototype so it's worth getting to grips with!</p>	
+	<p>You can read more about <a href="http://twig.sensiolabs.org/doc/templates.twig#template-inheritance">template inheritance on the Twig website</a>. It's a really powerful concept that can really speed up updating your prototype so it's worth getting to grips with!</p>	
 		
 </article>
 
@@ -230,7 +234,7 @@ title: Overview
 		
 	<p>Includes are HTML files that contain reusable snippets of code or content, and that can be pulled in and included anywhere on your site. They are parsed as Twig templates so can use any of the available template tags within them.</p>
 	
-	<p>By convention, includes are stored in a folder called 'includes' within the <code>/structure</code> directory, and can be pulled into your pages or templates using the <code>{% include %}</code> tag. For example, to include a header file that exists at <code>/structure/includes/header.html</code> you could do this:</p>
+	<p>By convention, includes are stored in a folder called 'includes' within the <code>/structure</code> directory, and can be pulled into your pages or templates using the <code>{% include %}</code> tag. For example, to include a header file that exists at <code>/structure/includes/header.twig</code> you could do this:</p>
 	
 <pre><code data-language="html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
@@ -240,7 +244,7 @@ title: Overview
 &lt;/head&gt;
 &lt;body&gt;
 
-  <strong>{% include "includes/header.html" %}</strong>
+  <strong>{% include "includes/header.twig" %}</strong>
 
   &lt;div class=&quot;content&quot;&gt;
     &lt;p&gt;Some content&lt;/p&gt;
@@ -280,13 +284,13 @@ title: Overview
 <strong>{% endmacro %}</strong>
 </code></pre>
 	
-	<p>Arguments to macros are always optional, and macros can reference other macros in the same file using the special <code>_self</code> variable. You can read more about defining macros in the <a href="http://twig.sensiolabs.org/doc/tags/macro.html">Twig documentation</a> which goes into a lot more detail.</p>
+	<p>Arguments to macros are always optional, and macros can reference other macros in the same file using the special <code>_self</code> variable. You can read more about defining macros in the <a href="http://twig.sensiolabs.org/doc/tags/macro.twig">Twig documentation</a> which goes into a lot more detail.</p>
 		
 	<h3>Importing Macros</h3>
 		
-	<p>Before macros can be used in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.html">import them</a>. You just need to add the following line to the top of your page, layout template or include file:</p>
+	<p>Before macros can be used in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.twig">import them</a>. You just need to add the following line to the top of your page, layout template or include file:</p>
 	
-	<pre><code><strong>{% import 'path/to/macro/file.html' as yourMacros %}</strong></code></pre>
+	<pre><code><strong>{% import 'path/to/macro/file.twig' as yourMacros %}</strong></code></pre>
 
 	<p>Where <code>yourMacros</code> can be a variable name of your choosing, and the defined path is relative to your <code>/structure</code> directory. You'll then be able to run any macros defined in the imported file by referencing them by name like so (assuming a macro name of <code>doSomething</code>):</p>
 	
@@ -294,7 +298,7 @@ title: Overview
 		
 	<h3>Built-in Macros</h3>
 	
-	<p>Prontotype comes with number of built-in macros to help with <a href="#assets">working with assets</a>, <a href="#navigation">generate navigation</a> and <a href="#forms">build forms</a>. The macro definition files live in <code>/app/views/PT/macros</code> but if you need to edit them it is recommended that you <strong>don't</strong> change them here: instead see the <a href="#overriding-defaults">cookbook entry on overriding system defaults</a> for a way to do this that won't break if you update Prontotype to a newer version.</p>
+	<p>Prontotype comes with number of built-in macros to help with working with assets, <a href="#navigation">generate navigation</a> and <a href="#forms">build forms</a>. The macro definition files live in <code>/app/views/PT/macros</code> but if you need to edit them it is recommended that you <strong>don't</strong> change them here: instead see the <a href="#overriding-defaults">cookbook entry on overriding system defaults</a> for a way to do this that won't break if you update Prontotype to a newer version.</p>
 		
 </article>
 
@@ -348,7 +352,7 @@ title: Overview
     <strong>text:</strong> A test link
 </code></pre>
 
-<h4>Usage: <code>/structure/pages/example.html</code></h4>
+<h4>Usage: <code>/structure/pages/example.twig</code></h4>
 <pre><code data-language="html">{% set bob = <strong>data.example.people.bob</strong> %}
 &lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
 &lt;p&gt;These are the links:&lt;/p&gt;
@@ -391,7 +395,7 @@ title: Overview
 }
 </code></pre>
 
-<h4>Usage: <code>/structure/pages/example.html</code></h4>
+<h4>Usage: <code>/structure/pages/example.twig</code></h4>
 <pre><code data-language="html">{% set bob = <strong>data.example.people.bob</strong> %}
 &lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
 &lt;p&gt;These are the links:&lt;/p&gt;
@@ -435,7 +439,7 @@ title: Overview
 &lt;/<strong>data</strong>&gt;
 </code></pre>
 
-<h4>Usage: <code>/structure/pages/example.html</code></h4>
+<h4>Usage: <code>/structure/pages/example.twig</code></h4>
 <pre><code data-language="html">{% set bob = <strong>data.example.people.bob</strong> %}
 &lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
 &lt;p&gt;These are the links:&lt;/p&gt;
@@ -462,7 +466,7 @@ title: Overview
 "pat","Pat","Postman","pat@thepostman.com"
 </code></pre>
 
-<h4>Usage: <code>/structure/pages/example2.html</code></h4>
+<h4>Usage: <code>/structure/pages/example2.twig</code></h4>
 <pre><code data-language="html">{% set bob = <strong>data.example2.bob</strong> %}
 &lt;p&gt;Bob&#x27;s first name is: <strong>{{ bob.first_name }}</strong> and his email is <strong>{{ bob.email }}</strong>&lt;/p&gt;
 &lt;p&gt;These are the links:&lt;/p&gt;
@@ -503,49 +507,28 @@ title: Overview
 	
 </article>
 
-<article id="assets">
-	<h2>Asset Helpers</h2>
-
-	<p>Prontotype includes a few helper <a href="#macros">macros</a> (i.e. functions) to make working with static assets - CSS/JS/images - a little bit easier. It also comes bundled with <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> (if that is your thing) to help kick-start your frontend code.</p>
+<article id="css">
+	<h2>Using Less or Sass (SCSS) to write your stylesheets</h2>
 	
-	<p>To use any of the assets macros in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.html">import them</a>. All that involves is including the following line at the top of your page, layout template or include file:</p>
-	
-	<pre><code data-language="html"><strong>{% import 'PT/macros/assets.html' as assets %}</strong></code></pre>
-
-	<p>And then you can use any of the assets macros in your templates using the <code>{{ assets }}</code> variable, as detailed below:</p>
-	
-	<h3>Including Twitter Bootstrap</h3>
-	
-	<p>Once you've imported the assets macros (see above), then you can easily include Twitter Bootstrap CSS and JS files into your page using the following tags:</p>
-		
-<pre><code data-language="html"><strong>{{ assets.bootstrap }}</strong>  &lt;!-- Generates &lt;link&gt; and &lt;script&gt; tags to include both the Bootstrap CSS and JS --&gt;
-	
-<strong>{{ assets.bootstrap(true) }}</strong>  &lt;!-- As above, but includes Bootstrap 'responsive' CSS file too --&gt;
-
-<strong>{{ assets.bootstrap_js() }}</strong>  &lt;!-- Generate a &lt;script&gt; tag to include the Bootstrap JS file --&gt;
-
-<strong>{{ assets.bootstrap_css() }}</strong>  &lt;!-- Generate a &lt;link&gt; tag to include the Bootstrap CSS file --&gt;
-
-<strong>{{ assets.bootstrap_css(true) }}</strong>  &lt;!-- As above, but includes Bootstrap 'responsive' CSS file too --&gt;
-</code></pre>
-	
-	<p class="note">Note that these tags will not include jQuery, so if you are using the Bootstrap JS you will need to included that in your page first.</p>
-	
-	<h3>Using LESS to write your stylesheets</h3>
-	
-	<p>Prontotype has built in support for generating CSS from <a href="http://lesscss.org/">LESS</a> files. It does this on the fly, so you can use LESS files instead of 'straight' CSS and have them automatically compiled at runtime into valid CSS.</p>
-	
-	<p>All you need to do is create your LESS files in a location of your choosing within your project (just make sure they are using the <strong>.less</strong> file extension!), and then just use the following tag to generate a <code>&lt;link&gt;</code> tag that will automagically point to the rendered stylesheet:</p>
-	
-<pre><code data-language="html"><strong>{{ assets.stylesheet('/path/to/your/file.less') }}</strong>
-&lt;!-- Outputs: &lt;link rel=&quot;stylesheet&quot; href=&quot;/path/to/generated/file.css&quot; type=&quot;text/css&quot; media=&quot;all&quot;&gt; --&gt;
+	<p>Prontotype has built in support for generating CSS from <a href="http://lesscss.org/">Less</a> or <a href="http://sass-lang.com/">Sass</a> (SCSS syntax only) files. It does this on the fly, so you can use Less/Sass files instead of 'straight' CSS and have them automatically compiled at runtime into valid CSS.</p>
+    
+    <p>To do this you need to include a special tag in the <code>&lt;head&gt;</code> of your page, telling the system where your input file(s) lives, where you want it output, and the exact HTML structure you want your output tag to take.</p>
+    
+    <h4>Less example:</h4>
+    
+<pre><code data-language="html">{% stylesheets 'path/to/input.less' filter='less' output='path/to/output.css' %}
+    &lt;link href=&quot;{{ asset_url }}&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
+{% endstylesheets %}
 </code></pre>
 
-<p>You can also optionally specify a <strong>media type</strong> as the second parameter (defaults to 'all' if not specified):</p>
-
-<pre><code data-language="html"><strong>{{ assets.stylesheet('/path/to/your/file.less', 'screen') }}</strong>
-&lt;!-- Outputs: &lt;link rel=&quot;stylesheet&quot; href=&quot;/path/to/generated/file.css&quot; type=&quot;text/css&quot; media=&quot;screen&quot;&gt; --&gt;
+    <h4>Sass (SCSS) example:</h4>
+    
+<pre><code data-language="html">{% stylesheets 'path/to/input.scss' filter='scss' output='path/to/output.css' %}
+    &lt;link href=&quot;{{ asset_url }}&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
+{% endstylesheets %}
 </code></pre>
+
+<p><strong>Note that you will need to make sure the directory that you want to output the CSS file to is writeable or this will fail!</strong></p>
 	
 </article>
 
@@ -557,7 +540,7 @@ title: Overview
 
 	<p>To use any of the placeholder images macros in your pages or layout templates, you first need to include the following line at the top of your page, layout template or include file:</p>
 
-	<pre><code data-language="html"><strong>{% import 'PT/macros/images.html' as images %}</strong></code></pre>
+	<pre><code data-language="html"><strong>{% import 'PT/macros/images.twig' as images %}</strong></code></pre>
 
 	<p>And then you can use any of the images macros in your templates using the <code>{{ images }}</code> variable, as detailed below:</p>
 
@@ -606,9 +589,9 @@ title: Overview
 	
 	<p>In order to help keep your navigation up-to-date as you add/remove/move pages, Prontotype comes with some built-in navigation <a href="#macros">macros</a> to generate navigation for you.</p>
 	
-	<p>To use any of the navigation generator macros in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.html">import them</a>. You can do that by including the following line at the top of your page, layout template or include file:</p>
+	<p>To use any of the navigation generator macros in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.twig">import them</a>. You can do that by including the following line at the top of your page, layout template or include file:</p>
 	
-	<pre><code data-language="html"><strong>{% import 'PT/macros/navigation.html' as nav %}</strong></code></pre>
+	<pre><code data-language="html"><strong>{% import 'PT/macros/navigation.twig' as nav %}</strong></code></pre>
 	
 	<p>For all generated navigation, the page 'name' displayed <strong>will be derived from the filename</strong>. This is done by converting underscores and dashes in the filename to spaces, and capitalising the individual words. The only exception to this is the homepage and the 'index' page in each section. The names used for these are defined globally in the <a href="#configuration">configuration</a> file, and can be overridden if required.</p>
 	
@@ -682,7 +665,7 @@ title: Overview
 <article id="forms">
 	<h2>Building Forms</h2>
 	<p>Documentation coming soon.</p>
-	<p>In the meantime - having a look in the form macros file located at <code>/app/views/PT/macros/forms.html</code> will give you a good idea of what is available to use!</p>
+	<p>In the meantime - having a look in the form macros file located at <code>/app/views/PT/macros/forms.twig</code> will give you a good idea of what is available to use!</p>
 </article>
 
 <article id="users">
@@ -698,24 +681,23 @@ title: Overview
 	<h4>Example users file: <code>/data/users.yml</code></h4>
 
 <pre><code><strong>user:</strong>
-  <strong>username:</strong> user-example
   <strong>name:</strong> Edward Xample
+  <strong>email:</strong> ed@xample.com
   <strong>role:</strong> user
     
 <strong>admin:</strong>
-  <strong>username:</strong> admin-example
   <strong>name:</strong> Ellie Xample
+  <strong>email:</strong> ellie@xample.com  
   <strong>role:</strong> admin
 </code></pre>
 	
-	<p>You can append to or replace these as needed - and properties such as username, name, role are entirely optional, and can be added to as you see fit. The only thing to note is that they each have a unique 'key' (such as <strong>user</strong> or <strong>admin</strong>) to reference them by. This is required if you want to use this user definition file.</p>
+	<p>You can append to or replace these as needed - and properties such as name, role, email etc are entirely optional, and can be added to as you see fit. The only thing to note is that they each have a unique 'key' (such as <strong>user</strong> or <strong>admin</strong>) to reference them by. This is required if you want to use this user definition file.</p>
 	
 	<h3>The 'user' variable</h3>
 		
 	<p>Your pages and templates will all have access to a special <code>user</code> variable. The value of this will be null (empty) if there is no 'logged in' user. So to only show content to 'logged in' users you can do the following:</p>
 	
 <pre><code data-language="html"><strong>{% if user %}</strong>&lt;p&gt;Display some logged-in-only content here&lt;/p&gt;<strong>{% endif %}</strong></code></pre>
-	
 	
 	<p>If you have defined one or more users (see above) and one is 'logged in' then it will be set to the definition of that user. So (using the example users file above) if the '<strong>admin</strong>' user has logged in, then you could do the following in your pages and templates:</p>
 	
@@ -734,7 +716,7 @@ title: Overview
 	
 	<p>Where <code>&lt;login_trigger&gt;</code> is as defined in your config file in the 'triggers' section (defaults to <code>_login</code>).</p>
 	
-	<p>You can optionally specify a <code>user</code> parameter with the id of a user you've defined in your <code>/data/users.yml</code> file, and/or a <code>redirect</code> parameter to let Prontotype know which URL you'd like to redirect to afterwards. If you don't specify a <code>redirect</code> parameter you user will be redirected to the homepage of your site after login.</p>
+	<p>You can optionally specify a <code>user</code> parameter with the id (key) of a user you've defined in your <code>/data/users.yml</code> file, and/or a <code>redirect</code> parameter to let Prontotype know which URL you'd like to redirect to afterwards. If you don't specify a <code>redirect</code> parameter you user will be redirected to the homepage of your site after login.</p>
 	
 	<h4>Example: login link</h4>
 	
@@ -751,7 +733,7 @@ title: Overview
   &lt;button type=&quot;submit&quot;&gt;Log in&lt;/button&gt;
 &lt;/form&gt;
 </code></pre>
-
+    
 	<h3>Logging out</h3>
 	
 	<p>To log out you just need to send the user to the <strong>logout URL</strong>, which looks like this:</p>
@@ -766,20 +748,7 @@ title: Overview
 &lt;a href=&quot;/_logout?redirect=/logout-success&quot;&gt;Log out&lt;/a&gt; 
 </code></pre>
 	
-	
 </article>
-
-<!--
-<article id="notes">
-	<h2>Notes</h2>
-	<p>Documentation coming soon.</p>
-</article>
-
-<article id="toolbar">
-	<h2>The Prontotype Toolbar</h2>
-	<p>Documentation coming soon.</p>
-</article>
--->
 
 <article id="short-urls">
 	
@@ -793,7 +762,7 @@ title: Overview
 	
 	<p>So (using the default configuration settings) an example short url for a page would be:</p>
 	
-	<pre><code>/structure/pages/about/<strong>[comp]-</strong>company.html  ==>  http://example.com/index.php/_p/comp</code></pre>
+	<pre><code>/structure/pages/about/<strong>[comp]-</strong>company.twig  ==>  http://example.com/index.php/_p/comp</code></pre>
 	
 	
 	<p>Sharing these short links as opposed to the full page URLs is useful because even if you move the page around while the prototype is being constructed, <strong>the short URL will always route to the correct page</strong>. And obviously the links are shorter and so (probably!) easier to remember.</p>
@@ -897,7 +866,7 @@ title: Overview
 	
 	<p>You've also got a page set up to display blog posts. That might look a bit like this:</p>
 	
-	<h4>Blog post display page: <code>/structure/blog/post.html</code></h4>
+	<h4>Blog post display page: <code>/structure/blog/post.twig</code></h4>
 	
 <pre><code data-language="html">&lt;!DOCTYPE html&gt;
 &lt;html lang=&quot;en&quot;&gt;
@@ -937,7 +906,7 @@ title: Overview
   <strong>"posts/(:any)" : "blog/post"</strong>
 </code></pre>
 	
-	<p><strong>And that's it!</strong> Now requests like <code>http://example.com/posts/post-1</code> will result in our <code>/structure/blog/post.html</code> page being rendered, which will then dynamically pull in data for the <strong>post-1</strong> post (as defined in our YAML file) and display it!</p>
+	<p><strong>And that's it!</strong> Now requests like <code>http://example.com/posts/post-1</code> will result in our <code>/structure/blog/post.twig</code> page being rendered, which will then dynamically pull in data for the <strong>post-1</strong> post (as defined in our YAML file) and display it!</p>
 
 </article>
 
@@ -954,7 +923,23 @@ title: Overview
 </code></pre>
 	
 	<p>When people then try to access the prototype they will be redirected to a login page, where they will need to enter these details in order to gain access to the site.</p>
-	
+    
+    <h3>IP Whitelisting</h3>
+    
+    <p>Sometimes you may want to specify one or more IP addresses (such as your office) so that users viewing the prototype from those locations don't need to put in the username/password every time they want to access the prototype. This can be done with the <code>ip_whitelist</code> config parameter, specifying either a single IP address or an array of IP addresses, as follows:</p>
+    
+<pre><code class="snippet" data-language="shell"><strong>authenticate:</strong>
+  ...
+  <strong>ip_whitelist:</strong> 123.456.789.1
+</code></pre>
+
+<p>Or a set of IP addresses:</p>
+
+<pre><code class="snippet" data-language="shell"><strong>authenticate:</strong>
+  ...
+  <strong>ip_whitelist:</strong> [123.456.789.1, 127.0.0.1, 98.76.54.32]
+</code></pre>
+
 </article>
 
 <article id="debug">
@@ -967,7 +952,7 @@ title: Overview
 
     <pre><code class="snippet" data-language="shell"><strong>debug:</strong>true</code></pre>
 
-    <p>Then, <a href="http://twig.sensiolabs.org/doc/functions/dump.html">dump</a> the variable you want to inspect (for example, the <code>data</code> variable):</p>
+    <p>Then, <a href="http://twig.sensiolabs.org/doc/functions/dump.twig">dump</a> the variable you want to inspect (for example, the <code>data</code> variable):</p>
 
     <pre><code class="snippet" data-language="shell"><strong>{{ dump(data) }}</strong></code></pre>
 </article>
@@ -1002,7 +987,8 @@ title: Overview
 #==================
 <strong>authenticate:
   username: 
-  password:</strong>
+  password:
+  ip_whitelist:</strong>
 
 #==================
 # prefix
@@ -1027,7 +1013,6 @@ title: Overview
   <strong>login:</strong> _login
   <strong>logout:</strong> _logout
   <strong>data:</strong> _data
-  <strong>assets:</strong> _assets
   <strong>shorturl:</strong> _p
 
 #==================
@@ -1075,15 +1060,15 @@ title: Overview
 	<h3>Pages</h3>
 	
 	<ul class="filetree">
-		<li class="file"><strong>/pages/404.html</strong> - Displayed when a URL cannot be resolved to a page.</li>
-		<li class="file"><strong>/pages/error.html</strong> - Displayed when an application or template error occurs.</li>
-		<li class="file"><strong>/pages/authenticate.html</strong> - If requiring authentication to view your prototype, this is the form page that is shown for people to log in on. Obviously you need to preserve the form itself if you replace this file!</li>
+		<li class="file"><strong>/pages/404.twig</strong> - Displayed when a URL cannot be resolved to a page.</li>
+		<li class="file"><strong>/pages/error.twig</strong> - Displayed when an application or template error occurs.</li>
+		<li class="file"><strong>/pages/authenticate.twig</strong> - If requiring authentication to view your prototype, this is the form page that is shown for people to log in on. Obviously you need to preserve the form itself if you replace this file!</li>
 	</ul>
 	
 	<h3>Layouts</h3>
 	
 	<ul class="filetree">
-		<li class="file"><strong>/layouts/system.html</strong> - The layout that all the system pages inherit from by default.</li>
+		<li class="file"><strong>/layouts/system.twig</strong> - The layout that all the system pages inherit from by default.</li>
 	</ul>
 	
 	<h3>Macros</h3>
@@ -1091,9 +1076,10 @@ title: Overview
 	<p>You can also override the <a href="#macros">default macros</a> provided by Prontotype by editing the macro files that you have just copied into <code>/structure/PT/macros</code>. This can be useful if you want to amend the HTML output of these built-in macros, or change their behaviour to better suit your requirements. The available macros files are:</p>
 	
 	<ul class="filetree">
-		<li class="file"><strong>/macros/assets.html</strong> - The <a href="#assets">asset helper</a> macros.</li>
-		<li class="file"><strong>/macros/forms.html</strong> - The <a href="#forms">form builder</a> macros.</li>
-		<li class="file"><strong>/macros/navigation.html</strong> - The <a href="#navigation">navigation generator</a> macros.</li>
+        <li class="file"><strong>/macros/images.twig</strong> - The <a href="#placeholder">placeholder image</a> macros.</li>
+		<li class="file"><strong>/macros/forms.twig</strong> - The <a href="#forms">form builder</a> macros.</li>
+		<li class="file"><strong>/macros/navigation.twig</strong> - The <a href="#navigation">navigation generator</a> macros.</li>
+        <li class="file"><strong>/macros/assets.twig</strong> - The asset helper macros.</li>
 	</ul>
 	
 </article>
