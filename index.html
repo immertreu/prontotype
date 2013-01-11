@@ -172,7 +172,7 @@ title: Overview
     
     <p>By convention, layouts for your prototype should be stored in a folder called '<strong>layouts</strong>' within your <code>/structure</code> directory. You will have to create this folder if you opt to use layouts in your prototype.</p>
     
-    <p>You can specify which template your page should extend by using the <code>{% extends %}</code> tag. Below is an example of how this works - note that the path you provide should be <strong>relative to the <code>/structure</code> directory</strong>.</p>
+    <p>You can specify which template your page should extend by using the <code>{{ "{% extends " }}%}</code> tag. Below is an example of how this works - note that the path you provide should be <strong>relative to the <code>/structure</code> directory</strong>.</p>
     
     <h3>An example of using a layout:</h3>
     
@@ -213,7 +213,7 @@ title: Overview
     <h4><strong>Page file (prototype homepage):</strong> <code>/structure/pages/index.twig</code> </h4>
     
     
-<pre><code data-language="html"><strong>{% extends &quot;layouts/example-layout.twig&quot; %}</strong>
+<pre><code data-language="html"><strong>{{ "{% extends &quot;layouts/example-layout.twig&quot;" }}%}</strong>
 
 <strong>{% block content %}</strong>
 
@@ -517,7 +517,17 @@ title: Overview
     
     <h4>Less example:</h4>
     
+<pre><code data-language="html">{% stylesheets 'path/to/input.less' filter='less' output='path/to/output.css' %}
+    &lt;link href=&quot;{{ asset_url }}&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
+{% endstylesheets %}
+</code></pre>
 
+    <h4>Sass (SCSS) example:</h4>
+    
+<pre><code data-language="html">{% stylesheets 'path/to/input.scss' filter='scss' output='path/to/output.css' %}
+    &lt;link href=&quot;{{ asset_url }}&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
+{% endstylesheets %}
+</code></pre>
 
 <p><strong>Note that you will need to make sure the directory that you want to output the CSS file to is writeable or this will fail!</strong></p>
     
