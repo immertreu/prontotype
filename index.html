@@ -25,7 +25,7 @@ title: Overview
         <li>Use YAML, JSON, CSV or XML files to define data structures that will be accessible throughout your prototype</li>
         <li>Write CSS using Less or Sass (SCSS) and have it automatically compiled for use in your protoype</li>
         <li>Give your pages IDs so you can move them around easily without breaking links</li>
-        <li>Use whatever frontend prototyping framework you like (<a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> is included, but anything can be used)</li>
+        <li>Use whatever frontend prototyping framework you like
         <li>Auto-generate navigation, forms and more using in-built macros</li>
         <li>And plenty more!</li>
     </ul>
@@ -517,17 +517,7 @@ title: Overview
     
     <h4>Less example:</h4>
     
-<pre><code data-language="html">{% stylesheets 'path/to/input.less' filter='less' output='path/to/output.css' %}
-    &lt;link href=&quot;{{ asset_url }}&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
-{% endstylesheets %}
-</code></pre>
 
-    <h4>Sass (SCSS) example:</h4>
-    
-<pre><code data-language="html">{% stylesheets 'path/to/input.scss' filter='scss' output='path/to/output.css' %}
-    &lt;link href=&quot;{{ asset_url }}&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
-{% endstylesheets %}
-</code></pre>
 
 <p><strong>Note that you will need to make sure the directory that you want to output the CSS file to is writeable or this will fail!</strong></p>
     
