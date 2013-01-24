@@ -303,6 +303,21 @@ title: Overview
 
 </article>
 
+
+<article id="multiple-prototypes">
+
+    <h3>Working with Multiple Prototypes</h3>
+
+    <p>A single prontotype instance can serve multiple prototypes.</p>
+
+    <p>To do so, first copy the <code>prototypes.yml.dist</code> file to a <code>prototypes.yml</code> file in the root of your prontotype installation. Edit the latter, informing for each prototype the corresponding <strong>domain</strong> name and <code>base_path</code> of every prototype root directory. Don't forget to update your Apache (or other webserver) settings to make the prontotype instance match the new domains.</p>
+
+    <p>All of your prototypes should be <a href="#structure">structured</a> the way the default prototype is: <code>data</code> and <code>structure</code> directories, the latter containing <code>pages</code>, etc.</p>
+
+    <p>In every prototype root directory, you can add a <code>config.yml</code> file to override the main <code>config.yml</code>.</p>
+
+</article>
+
 <h1 id="functionality">Functionality</h1>
 
 <article id="data">
@@ -962,7 +977,9 @@ title: Overview
 
 <article>
 
-    <p>Prontotype's default configuration is fine for a lot of use cases. But if you do want to tweak any of the settings, you can do so in the YAML configuration file <code>config.yml</code> found in the root of your Prontotype install.</p>
+    <p>Prontotype's default configuration is fine for a lot of use cases. But if you do want to tweak any of the settings, you can do so in the base YAML configuration file <code>config.yml</code> found in the root of your Prontotype install.</p>
+
+    <p>In case of <a href="multiple-prototypes">multiple prototypes</a>, you can specify a <code>config.yml</code> per prototype, which will override your base <code>config.yml</code>.</p>
 
     <p>Here's a brief overview of the settings, what they do and their default values:</p>
 
@@ -1185,7 +1202,40 @@ title: Overview
     <h2>Misc utilities</h2>
 
     <p>Docs coming soon</p>
-
 </article>
 
+<h1 id="contributing">Contributing to Prontotype</h1>
 
+<article>
+
+    <h2>Code</h2>
+
+    <p>Check out the <a href="https://github.com/allmarkedup/prontotype">Github repo</a></p>
+
+    <h2>Tests</h2>
+
+    <p>Since Prontotype mixes technical layers, a <a href="http://en.wikipedia.org/wiki/Behavior-driven_development">BDD</a> approach has been adopted to test it, thanks to <a href="http://behat.org/">Behat</a>. The tests of Prontotypes are thus composed of two test prototypes (foo and bar) and a set of test features, all stored in the <code>app/test</code> directory.</p>
+
+    <h3>Setup test prototypes</h3>
+    <ol>
+        <li>Make sure the foo and bar prototypes are activated in your <code>prototypes.yml</code> file.</li>
+        <li>Take necessary measures at web server and DNS levels to serve them.</li>
+        <li>Check that you can access them at <a href="http://prontotype-foo.lo">prontotype-foo.lo</a> and <a href="http://prontotype-bar.lo">prontotype-bar.lo</a>.</li>
+    </ol>
+
+    <h3>Run tests</h3>
+
+    <p>At the root of your prontotype installation run (within a terminal):</p>
+    <pre><code>app/bin/behat --config app/test/behat.yml</code></pre>
+
+    <p>To run a specific test (eg. the navigation tests)::</p>
+    <pre><code>app/bin/behat --config app/test/behat.yml app/test/features/navigation.feature</code></pre>
+
+    <h3>Write tests</h3>
+
+    <p>Get to know <a href="http://docs.behat.org/guides/1.gherkin.html">Gherkin</a> and create test for new funtionalities by creating a file in <code>app/test/features</code> directory and enhancing the foo prototype with test material (the bar prototype is for things that vary at prototype level, like authhentication), which require several prototypes.</p>
+
+    <p>Get a list of the possible scenario steps with:</p>
+    <pre><code>app/bin/behat --config app/test/behat.yml -dl</code></pre>
+
+</article>
