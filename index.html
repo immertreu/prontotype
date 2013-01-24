@@ -291,7 +291,7 @@ title: Overview
 
     <p>Before macros can be used in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.twig">import them</a>. You just need to add the following line to the top of your page, layout template or include file:</p>
 
-    <pre><code><strong>{{ "{%" }} import %} as yourMacros %}</strong></code></pre>
+    <pre><code><strong>{{ "{%" }} import as yourMacros %}</strong></code></pre>
 
     <p>Where <code>yourMacros</code> can be a variable name of your choosing, and the defined path is relative to your <code>/structure</code> directory. You'll then be able to run any macros defined in the imported file by referencing them by name like so (assuming a macro name of <code>doSomething</code>):</p>
 
@@ -556,7 +556,7 @@ title: Overview
 
     <p>To use any of the placeholder images macros in your pages or layout templates, you first need to include the following line at the top of your page, layout template or include file:</p>
 
-    <pre><code data-language="html"><strong>{{ "{%" }} import %} 'PT/macros/images.twig' as images %}</strong></code></pre>
+    <pre><code data-language="html"><strong>{{ "{%" }} import 'PT/macros/images.twig' as images %}</strong></code></pre>
 
     <p>And then you can use any of the images macros in your templates using the <code>{{ "{{" }} images }}</code> variable, as detailed below:</p>
 
@@ -599,7 +599,7 @@ title: Overview
 
     <p>To use any of the navigation generator macros in your pages or layout templates, you first need to <a href="http://twig.sensiolabs.org/doc/tags/import.twig">import them</a>. You can do that by including the following line at the top of your page, layout template or include file:</p>
 
-    <pre><code data-language="html"><strong>{{ "{%" }} import %} 'PT/macros/navigation.twig' as nav %}</strong></code></pre>
+    <pre><code data-language="html"><strong>{{ "{%" }} import 'PT/macros/navigation.twig' as nav %}</strong></code></pre>
 
     <p>For all generated navigation, the page 'name' displayed <strong>will be derived from the filename</strong>. This is done by converting underscores and dashes in the filename to spaces, and capitalising the individual words. The only exception to this is the homepage and the 'index' page in each section. The names used for these are defined globally in the <a href="#configuration">configuration</a> file, and can be overridden if required.</p>
 
