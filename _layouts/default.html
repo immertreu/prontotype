@@ -4,19 +4,19 @@
 	<meta charset="utf-8">
 
 	<script>var html = document.getElementsByTagName('html')[0]; html.className += ' hasJS';</script>
-	
+
 	<link rel="stylesheet" href="/assets/css/main.css" media="all">
-	
+
 	<title>Prontotype :: Data-driven interactive prototyping framework</title>
 </head>
 <body>
-	
+
 <div class="wrapper">
-	
+
 	<div id="header" class="receptacle">
-		
+
 		<div class="inner">
-			
+
 			<div class="head">
 				<a id="project-name" class="branding title" href="/"><span>Pronto</span>type</a>
 			</div>
@@ -60,27 +60,27 @@
 				<li><a href="#tag-ref">Tag Reference</a></li>
 				<li class="download"><a href="https://github.com/allmarkedup/prontotype/zipball/master">Download &darr;</a></li>
 			</ul>
-			
+
 		</div>
 
 	</div>
 
 	<div id="content" class="receptacle">
-	
+
 		<div class='inner'>
-			
+
 			{{ content }}
-			
+
 		</div>
-		
+
 	</div>
-	
+
 </div>
 
 <script>
 	var logo = document.getElementById('project-name'),
 		nav = document.getElementById('main-nav');
-		
+
 	logo.onclick = function(){
 		var state = nav.getAttribute('data-state');
 		if ( state === 'open' ) nav.setAttribute('data-state', '');
@@ -93,5 +93,5 @@
 
 
 
-</body>	
+</body>
 </html>
