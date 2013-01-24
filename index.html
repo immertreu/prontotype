@@ -584,18 +584,10 @@ title: Overview
     <p>Outputs the following placeholder image:</p>
     <p><img src="http://lorempixel.com/300/150/people/hello world"/></p>
 
-    <h3>Flickholdr</h3>
-    <p>To generate random placeholder images with <a href="http://flickholdr.com/">flickholdr</a>:</p>
-<pre><code data-language="html">
-<strong>{{ "{{" }} images.flickholdr({ width:300, height:150, tags: "people,face"}) }}</strong>  &lt;!-- Outputs: &lt;img href=&quot;http://flickholdr.com/300/150/people,face/7&quot; /&gt; --&gt;
-</code></pre>
-    <p>Outputs the following placeholder image:</p>
-    <p> <img src="http://flickholdr.com/300/150/people,face/7"/></p>
-
     <h3>Extras</h3>
     <p>You can add any class or other attribute to placeholder images. Example:</p>
 <pre><code data-language="html">
-<strong>{{ "{{" }} images.flickholdr({ width:300, height:150, tags: "people,face"}, {class:"illu", id:"face"}) }}</strong>  &lt;!-- Outputs: &lt;img class=&quot;illu&quot; id=&quot;face&quot; href=&quot;http://flickholdr.com/300/150/people,face/7&quot; /&gt; --&gt;
+<strong>{{ "{{" }} images.lorempixel({ width:300, height:150, cat: "people", text: "hello world"}, {class:"illu", id:"face"}) }}</strong>  &lt;!-- Outputs: &lt;img class=&quot;illu&quot; id=&quot;face&quot; href=&quot;http://lorempixel.com/300/150/people/hello world&quot; /&gt; --&gt;
 </code></pre>
 </article>
 
