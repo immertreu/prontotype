@@ -532,16 +532,16 @@ title: Overview
 
     <h4>Less example:</h4>
 
-<pre><code data-language="html">{{ "{%" }} stylesheets %} 'path/to/input.less' filter='less' output='path/to/output.css' %}
+<pre><code data-language="html">{{ "{%" }} stylesheets 'path/to/input.less' filter='less' output='path/to/output.css' %}
     &lt;link href=&quot;{{ "{{" }} asset_url }}&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
-{{ "{%" }} endstylesheets %} %}
+{{ "{%" }} endstylesheets %}
 </code></pre>
 
     <h4>Sass (SCSS) example:</h4>
 
-<pre><code data-language="html">{{ "{%" }} stylesheets %} 'path/to/input.scss' filter='scss' output='path/to/output.css' %}
+<pre><code data-language="html">{{ "{%" }} stylesheets 'path/to/input.scss' filter='scss' output='path/to/output.css' %}
     &lt;link href=&quot;{{ "{{" }} asset_url }}&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
-{{ "{%" }} endstylesheets %} %}
+{{ "{%" }} endstylesheets %}
 </code></pre>
 
 <p><strong>Note that you will need to make sure the directory that you want to output the CSS file to is writeable or this will fail!</strong></p>
