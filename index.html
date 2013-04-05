@@ -540,6 +540,14 @@ title: Overview
     <p>Prontotype has built in support for generating CSS from <a href="http://lesscss.org/">Less</a> or <a href="http://sass-lang.com/">Sass</a> (SCSS syntax only) files. It does this on the fly, so you can use Less/Sass files instead of 'straight' CSS and have them automatically compiled at runtime into valid CSS.</p>
 
     <p>To do this you need to include a special tag in the <code>&lt;head&gt;</code> of your page, telling the system where your input file(s) lives, where you want it output, and the exact HTML structure you want your output tag to take.</p>
+    
+    <p>You also need to set the <code>auto_generate</code> config option to <code>true</code> in the config.yml file:</p>
+    
+<pre><code class="snippet" data-language="shell"><strong>assets:</strong>
+  <strong>auto_generate:</strong> true
+</code></pre>
+    
+    <p>Autogenerating the stylesheets on each page load can slow down the prototype, so if you are experiencing performance issues you may want to disable auto-generation and only enable occasionally if you update the LESS/SASS files.</p>
 
     <h4>Less example:</h4>
 
@@ -1008,15 +1016,6 @@ title: Overview
 <strong>debug:</strong> false
 
 #==================
-# cache_path
-# -----------------
-# Specify a path to a writeable directory (relative to the Prontotype root directory)
-# to enable caching of templates and data
-#==================
-<strong>cache_path:</strong>
-<strong>request_cache_expiry:</strong> 5 # in minutes
-
-#==================
 # authenticate
 # -----------------
 # Provide a username and password pair to enable password-protection of the prototype
@@ -1072,6 +1071,22 @@ title: Overview
     <strong>enclosure:</strong> '"'
     <strong>escape:</strong> '\'
     <strong>id_header:</strong> id
+    
+#==================
+# Assets
+# -----------------
+# Configuration for LESS/SASS generation
+#==================
+<strong>assets:</strong>
+  <strong>auto_generate:</strong> false   # whether to auto-dump css files on page load. Can slow things down!
+
+#==================
+# routing
+# -----------------
+# Add custom routes here
+#==================
+<strong>routes:</strong>
+    
 </code></pre>
 
 <p>Note that deleting a setting from the <code>config.yml</code> file will cause it to revert to its default.</p>
