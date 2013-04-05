@@ -425,8 +425,7 @@ title: Overview
 
     <h4>Example XML file: <code>/data/example.xml</code></h4>
 
-<pre><code data-language="xml">
-&lt;<strong>data</strong>&gt;
+<pre><code data-language="html">&lt;<strong>data</strong>&gt;
     &lt;<strong>people</strong>&gt;
         &lt;<strong>bob</strong>&gt;
             &lt;<strong>first_name</strong>&gt;<strong>Bob</strong>&lt;<strong>/first_name</strong>&gt;
@@ -453,7 +452,7 @@ title: Overview
 </code></pre>
 
 <h4>Usage: <code>/structure/pages/example.twig</code></h4>
-<pre><code data-language="html">{{ "{%" }} set %} bob = <strong>data.example.people.bob</strong> %}
+<pre><code data-language="html">{{ "{%" }} set bob = <strong>data.example.people.bob</strong> %}
 &lt;p&gt;Bob&#x27;s first name is: <strong>{{ "{{" }} bob.first_name }}</strong> and his email is <strong>{{ "{{" }} bob.email }}</strong>&lt;/p&gt;
 &lt;p&gt;These are the links:&lt;/p&gt;
 &lt;ul&gt;
@@ -527,8 +526,7 @@ title: Overview
 
 	<h4>Usage example: scraping, filtering and injecting the wikipedia homepage</h4>
     <p>The following code prepares some HTML content to inject. It then scraps the wikipedia homepage, retains its "In the news" section, and inject in every list element of this section the predefined injection markup:</p>
-<pre><code data-language="html">
-{{ "{%" }} set injection %}
+<pre><code data-language="html">{{ "{%" }} set injection %}
 &lt;p style="color:red"&gt;This text is injected&lt;/p&gt;
 {{ "{%" }} endset %}
 {{ "{{" }} scrap.get('http://en.wikipedia.org/wiki/Main_Page#mp-itn').filter('#mp-itn').insert('li', injection) }}
